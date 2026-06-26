@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -745,13 +746,7 @@
         if (bar) bar.style.display = 'block';
         if (status) status.textContent = 'جاري التحميل إلى: ' + path;
         updateDownloadProgress(boxId, 1);
-
-        try {
-            Android.downloadAndUnzip(url, path, boxId);
-        } catch (e) {
-            box.classList.add('error');
-            if (status) status.textContent = 'خطأ: ' + e;
-        }
+        Android.downloadAndUnzip(url, path, boxId);
     };
 
     window.updateDownloadProgress = function (boxId, progress) {
