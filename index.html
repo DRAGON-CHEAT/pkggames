@@ -745,8 +745,14 @@
         var status = box.querySelector('.status-msg');
         if (bar) bar.style.display = 'block';
         if (status) status.textContent = 'جاري التحميل إلى: ' + path;
+        updateDownloadProgress(boxId, 1);
 
-        Android.downloadAndUnzip(url, path, boxId);
+        try {
+            Android.downloadAndUnzip(url, path, boxId);
+        } catch (e) {
+            box.classList.add('error');
+            if (status) status.textContent = 'خطأ: ' + e;
+        }
     };
 
     window.updateDownloadProgress = function (boxId, progress) {
