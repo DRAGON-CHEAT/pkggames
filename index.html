@@ -282,13 +282,44 @@
 
         .btn-clean:focus { background: #555b65; }
 
-        .btn-install {
-            background: #3a3f47;
-            color: #aaa;
-            width: 100%;
-            margin-bottom: 0;
-            font-size: calc(var(--btn-size) - 1px);
+        .btn-storage {
+            display: none;
+            background: #0d6e3a;
+            color: #fff;
+            width: calc(50% - 3px);
+            margin-bottom: 8px;
         }
+
+        .btn-storage.external { background: #0b5ed7; }
+
+        .box.storage-visible .btn-storage { display: inline-block; }
+
+        .box.storage-visible .btn-download { width: 100%; margin-bottom: 6px; }
+
+        .details-panel {
+            display: none;
+            margin: 0 4px 10px;
+            padding: 8px 10px;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.45);
+            font-size: calc(var(--btn-size) - 1px);
+            line-height: 1.5;
+            text-align: right;
+        }
+
+        .box.details-open .details-panel { display: block; }
+
+        .status-msg {
+            display: none;
+            margin-top: 8px;
+            font-size: 11px;
+            color: #7df4ff;
+        }
+
+        .box.done .status-msg,
+        .box.error .status-msg { display: block; }
+
+        .box.error .status-msg { color: #ff6b6b; }
 
         .btn-install.is-ready {
             background: #1a3d1a;
@@ -571,30 +602,38 @@
                     <h2 class="section-title">For Android</h2>
                 </div>
                 <div class="cards-grid">
-                    <div class="box" tabindex="0" onfocus="resetBox(this)">
+                    <div class="box" id="box-android-saga" tabindex="0" data-url="https://drive.usercontent.google.com/u/0/uc?id=1Elec8F9naFkcYzoV2eGL8zbreZJX_f7T&export=download" onfocus="resetBox(this)">
                         <div class="title-wrapper">
                             <h2>saga-gnaras</h2>
                         </div>
+                        <div class="details-panel">حزمة ألعاب Android — بعد الاكتمال ستُفك في مجلد dragonroms الذي تختاره.</div>
                         <div class="btn-group">
-                            <button type="button" class="btn" onclick="startAction(this, 'https://github.com/DRAGON-CHEAT/960/releases/download/1.2/extension2_M-ok.apk')">تحميل التطبيق</button>
-                            <button type="button" class="btn btn-install is-not-ready">تثبيت الان</button>
+                            <button type="button" class="btn btn-details" onclick="toggleDetails(this)">عرض تفصيل</button>
+                            <button type="button" class="btn btn-download" onclick="showStorageChoice(this)">تحميل ملف</button>
+                            <button type="button" class="btn btn-storage internal" onclick="startDownload(this, 'internal')">تخزين داخلي</button>
+                            <button type="button" class="btn btn-storage external" onclick="startDownload(this, 'external')">تخزين خارجي USB/SD</button>
                             <div class="progress-container">
                                 <div class="timer-text">0%</div>
                                 <div class="progress-bar"></div>
                             </div>
+                            <div class="status-msg"></div>
                         </div>
                     </div>
-                    <div class="box" tabindex="0" onfocus="resetBox(this)">
+                    <div class="box" id="box-android-natando" tabindex="0" data-url="https://drive.usercontent.google.com/u/0/uc?id=1Elec8F9naFkcYzoV2eGL8zbreZJX_f7T&export=download" onfocus="resetBox(this)">
                         <div class="title-wrapper">
                             <h2>natando</h2>
                         </div>
+                        <div class="details-panel">حزمة ألعاب Android — اختر التخزين الداخلي أو USB/SD ثم ابدأ التحميل.</div>
                         <div class="btn-group">
-                            <button type="button" class="btn" onclick="startAction(this, 'https://github.com/DRAGON-CHEAT/960/releases/download/1.0/extension1-ip-ok.apk')">تحميل التطبيق</button>
-                            <button type="button" class="btn btn-install is-not-ready">تثبيت الان</button>
+                            <button type="button" class="btn btn-details" onclick="toggleDetails(this)">عرض تفصيل</button>
+                            <button type="button" class="btn btn-download" onclick="showStorageChoice(this)">تحميل ملف</button>
+                            <button type="button" class="btn btn-storage internal" onclick="startDownload(this, 'internal')">تخزين داخلي</button>
+                            <button type="button" class="btn btn-storage external" onclick="startDownload(this, 'external')">تخزين خارجي USB/SD</button>
                             <div class="progress-container">
                                 <div class="timer-text">0%</div>
                                 <div class="progress-bar"></div>
                             </div>
+                            <div class="status-msg"></div>
                         </div>
                     </div>
                 </div>
@@ -607,31 +646,38 @@
                     <h2 class="section-title">For Android Tv</h2>
                 </div>
                 <div class="cards-grid">
-                    <div class="box" tabindex="0" onfocus="resetBox(this)">
+                    <div class="box" id="box-tv-saga" tabindex="0" data-url="https://drive.usercontent.google.com/u/0/uc?id=1Elec8F9naFkcYzoV2eGL8zbreZJX_f7T&export=download" onfocus="resetBox(this)">
                         <div class="title-wrapper">
                             <h2>saga-ganaras</h2>
                         </div>
+                        <div class="details-panel">حزمة ألعاب Android TV — تُفك تلقائياً في dragonroms بعد اكتمال التحميل.</div>
                         <div class="btn-group">
-                            <button type="button" class="btn" onclick="startAction(this, 'https://github.com/DRAGON-CHEAT/960/releases/download/1.3/extension2_Tv-ok.apk')">تحميل التطبيق</button>
-                            <button type="button" class="btn btn-install is-not-ready">تثبيت الان</button>
+                            <button type="button" class="btn btn-details" onclick="toggleDetails(this)">عرض تفصيل</button>
+                            <button type="button" class="btn btn-download" onclick="showStorageChoice(this)">تحميل ملف</button>
+                            <button type="button" class="btn btn-storage internal" onclick="startDownload(this, 'internal')">تخزين داخلي</button>
+                            <button type="button" class="btn btn-storage external" onclick="startDownload(this, 'external')">تخزين خارجي USB/SD</button>
                             <div class="progress-container">
                                 <div class="timer-text">0%</div>
                                 <div class="progress-bar"></div>
                             </div>
+                            <div class="status-msg"></div>
                         </div>
                     </div>
-                    <div class="box" tabindex="0" onfocus="resetBox(this)">
+                    <div class="box" id="box-tv-natando" tabindex="0" data-url="https://drive.usercontent.google.com/u/0/uc?id=1Elec8F9naFkcYzoV2eGL8zbreZJX_f7T&export=download" onfocus="resetBox(this)">
                         <div class="title-wrapper">
-                            <h2>natando
-                           </h2>
+                            <h2>natando</h2>
                         </div>
+                        <div class="details-panel">حزمة ألعاب Android TV — اختر مسار التخزين ثم انتظر اكتمال فك الضغط.</div>
                         <div class="btn-group">
-                            <button type="button" class="btn" onclick="startAction(this, 'https://github.com/DRAGON-CHEAT/960/releases/download/1.0/extension1-ip-ok.apk')">تحميل التطبيق</button>
-                            <button type="button" class="btn btn-install is-not-ready">تثبيت الان</button>
+                            <button type="button" class="btn btn-details" onclick="toggleDetails(this)">عرض تفصيل</button>
+                            <button type="button" class="btn btn-download" onclick="showStorageChoice(this)">تحميل ملف</button>
+                            <button type="button" class="btn btn-storage internal" onclick="startDownload(this, 'internal')">تخزين داخلي</button>
+                            <button type="button" class="btn btn-storage external" onclick="startDownload(this, 'external')">تخزين خارجي USB/SD</button>
                             <div class="progress-container">
                                 <div class="timer-text">0%</div>
                                 <div class="progress-bar"></div>
                             </div>
+                            <div class="status-msg"></div>
                         </div>
                     </div>
                 </div>
@@ -641,8 +687,92 @@
         <div class="footer">Build by DraGon Show™_2026</div>
         </div>
     </div>
-سكربت  https://drive.usercontent.google.com/u/0/uc?id=1Elec8F9naFkcYzoV2eGL8zbreZJX_f7T&export=download 
 
-    
+<script>
+(function () {
+    function getBox(el) {
+        return el.closest('.box');
+    }
+
+    window.resetBox = function (box) {
+        box.classList.remove('storage-visible', 'details-open', 'box-downloading', 'done', 'error');
+        var bar = box.querySelector('.progress-container');
+        var timer = box.querySelector('.timer-text');
+        var fill = box.querySelector('.progress-bar');
+        var status = box.querySelector('.status-msg');
+        if (bar) bar.style.display = 'none';
+        if (timer) timer.textContent = '0%';
+        if (fill) fill.style.width = '0%';
+        if (status) status.textContent = '';
+    };
+
+    window.toggleDetails = function (btn) {
+        var box = getBox(btn);
+        box.classList.toggle('details-open');
+    };
+
+    window.showStorageChoice = function (btn) {
+        var box = getBox(btn);
+        box.classList.add('storage-visible');
+        box.classList.remove('done', 'error');
+    };
+
+    window.startDownload = function (btn, storage) {
+        var box = getBox(btn);
+        var url = box.getAttribute('data-url');
+        var boxId = box.id;
+        if (!url || !boxId) return;
+
+        if (typeof Android === 'undefined') {
+            alert('افتح المتجر من داخل تطبيق المحاكي.');
+            return;
+        }
+
+        var path = storage === 'internal'
+            ? Android.getInternalPath()
+            : Android.getExternalPath();
+
+        if (!path) {
+            alert(storage === 'external'
+                ? 'لم يتم العثور على USB/SD. وصّل الذاكرة الخارجية أو اختر التخزين الداخلي.'
+                : 'مسار التخزين الداخلي غير متاح.');
+            return;
+        }
+
+        box.classList.add('box-downloading');
+        box.classList.remove('done', 'error');
+        var bar = box.querySelector('.progress-container');
+        var status = box.querySelector('.status-msg');
+        if (bar) bar.style.display = 'block';
+        if (status) status.textContent = 'جاري التحميل إلى: ' + path;
+
+        Android.downloadAndUnzip(url, path, boxId);
+    };
+
+    window.updateDownloadProgress = function (boxId, progress) {
+        var box = document.getElementById(boxId);
+        if (!box) return;
+        var timer = box.querySelector('.timer-text');
+        var fill = box.querySelector('.progress-bar');
+        var pct = Math.max(0, Math.min(100, progress | 0));
+        if (timer) timer.textContent = pct + '%';
+        if (fill) fill.style.width = pct + '%';
+    };
+
+    window.onUnzipComplete = function (boxId, success) {
+        var box = document.getElementById(boxId);
+        if (!box) return;
+        box.classList.remove('box-downloading');
+        var status = box.querySelector('.status-msg');
+        if (success) {
+            box.classList.add('done');
+            if (status) status.textContent = 'تم التحميل وفك الضغط بنجاح. أعد فحص المكتبة (RESCAN) لعرض الألعاب.';
+        } else {
+            box.classList.add('error');
+            if (status) status.textContent = 'فشل التحميل أو فك الضغط. تحقق من الرابط أو مساحة التخزين.';
+        }
+    };
+})();
+</script>
 </body>
 </html>
