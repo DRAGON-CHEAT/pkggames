@@ -744,7 +744,7 @@
         var bar = box.querySelector('.progress-container');
         var status = box.querySelector('.status-msg');
         if (bar) bar.style.display = 'block';
-        if (status) status.textContent = 'جاري التحميل إلى: ' + path;
+        if (status) status.textContent = 'جاري التحميل... سيتم فك الملف في: ' + path;
         updateDownloadProgress(boxId, 1);
         Android.downloadAndUnzip(url, path, boxId);
     };
