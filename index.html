@@ -1,0 +1,648 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DRAGON SHOW</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            height: 100vh;
+            color: #fff;
+            font-family: "Segoe UI", Tahoma, sans-serif;
+            background: #0a1628 url("dragon_bg.png") center center / cover no-repeat fixed;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .top-header {
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .top-bar {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 24px 8px;
+            background:
+                linear-gradient(180deg,
+                    rgba(0, 110, 130, 0.55) 0%,
+                    rgba(0, 65, 85, 0.72) 45%,
+                    rgba(8, 35, 52, 0.88) 100%);
+            box-shadow:
+                inset 0 1px 0 rgba(120, 240, 255, 0.35),
+                inset 0 -4px 14px rgba(0, 180, 210, 0.1),
+                0 2px 12px rgba(0, 0, 0, 0.35);
+        }
+
+        .top-glow-down {
+            position: relative;
+            height: 22px;
+            pointer-events: none;
+            background: linear-gradient(180deg,
+                rgba(120, 248, 255, 0.45) 0%,
+                rgba(0, 229, 255, 0.2) 22%,
+                rgba(0, 200, 230, 0.07) 55%,
+                transparent 100%);
+        }
+
+        .top-glow-down::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            height: 2px;
+            background: linear-gradient(90deg,
+                transparent 0%,
+                rgba(125, 244, 255, 0.4) 8%,
+                #7df4ff 22%,
+                #00e5ff 50%,
+                #7df4ff 78%,
+                rgba(125, 244, 255, 0.4) 92%,
+                transparent 100%);
+            box-shadow:
+                0 0 8px rgba(125, 244, 255, 1),
+                0 0 16px rgba(0, 229, 255, 0.75),
+                0 0 28px rgba(0, 229, 255, 0.35),
+                0 2px 10px rgba(0, 229, 255, 0.25);
+        }
+
+        .brand {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #fff;
+        }
+
+        .main-scroll {
+            flex: 1;
+            min-height: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .scroll-body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100%;
+            box-sizing: border-box;
+            padding: 4px 0 0;
+        }
+
+        .columns {
+            display: flex;
+            gap: 0;
+            min-height: min-content;
+            align-items: stretch;
+            padding: 0 16px;
+        }
+
+        .section {
+            flex: 1;
+            min-width: 0;
+            padding: 12px var(--section-pad-x) 20px;
+        }
+
+        .section-divider {
+            width: 2px;
+            flex-shrink: 0;
+            align-self: stretch;
+            background: linear-gradient(180deg, transparent 0%, transparent 6%, rgba(0, 220, 255, 0.55) 18%, rgba(0, 220, 255, 0.55) 82%, transparent 100%);
+            margin: 34px 0 20px;
+        }
+
+        .section-title {
+            display: inline-block;
+            margin: 0;
+            padding: 4px 42px 6px;
+            text-align: center;
+            font-family: "Orbitron", "Arial Black", sans-serif;
+            font-size: var(--section-title-size);
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: 1.5px;
+            text-transform: none;
+            line-height: 1.2;
+            text-shadow: 0 1px 6px rgba(0, 0, 0, 0.45);
+            background: linear-gradient(90deg,
+                transparent 0%,
+                rgba(0, 55, 120, 0.4) 5%,
+                rgba(0, 123, 255, 0.78) 22%,
+                rgba(0, 123, 255, 0.78) 78%,
+                rgba(0, 55, 120, 0.4) 95%,
+                transparent 100%);
+        }
+
+        .section-head {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        :root {
+            --card-cols: 2;
+            --card-gap: 14px;
+            --box-pad-y: 12px;
+            --box-pad-x: 10px;
+            --card-title-size: 14px;
+            --btn-size: 12px;
+            --btn-pad-y: 9px;
+            --section-title-size: 20px;
+            --section-pad-x: 14px;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(var(--card-cols), minmax(0, 1fr));
+            gap: var(--card-gap);
+        }
+
+        .box {
+            position: relative;
+            overflow: hidden;
+            background-color: rgba(18, 28, 42, 0.92);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border: 2px solid rgba(255, 255, 255, 0.12);
+            border-radius: clamp(12px, 1.5vw, 18px);
+            padding: var(--box-pad-y) var(--box-pad-x) calc(var(--box-pad-y) + 2px);
+            text-align: center;
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .box::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: linear-gradient(180deg,
+                rgba(6, 14, 26, 0.35) 0%,
+                rgba(6, 14, 26, 0.82) 55%,
+                rgba(6, 14, 26, 0.92) 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .box > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .section[aria-label="For Android"] .box {
+            background-image: url("https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=640&q=80");
+        }
+
+        .section[aria-label="For Android Tv"] .box {
+            background-image: url("https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=640&q=80");
+        }
+
+        .box:focus,
+        .box:focus-within {
+            border-color: #00b4ff;
+            transform: scale(1.03);
+            outline: none;
+            box-shadow: 0 0 18px rgba(0, 180, 255, 0.35);
+        }
+
+        .title-wrapper {
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(0, 180, 255, 0.25);
+        }
+
+        .title-wrapper h2 {
+            display: block;
+            width: 100%;
+            margin: 0;
+            padding: 6px 8px 7px;
+            font-size: var(--card-title-size);
+            font-weight: 700;
+            color: #4db8ff;
+            line-height: 1.3;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.55);
+            background: linear-gradient(90deg,
+                transparent 0%,
+                rgba(0, 55, 120, 0.42) 2%,
+                rgba(0, 95, 115, 0.78) 14%,
+                rgba(0, 95, 115, 0.78) 86%,
+                rgba(0, 55, 120, 0.42) 98%,
+                transparent 100%);
+        }
+
+        .btn-group {
+            padding: 0 4px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0 6px;
+        }
+
+        .btn {
+            background: #007bff;
+            color: #fff;
+            border: none;
+            padding: var(--btn-pad-y) 8px;
+            border-radius: 12px;
+            font-size: var(--btn-size);
+            cursor: pointer;
+            margin: 0 0 8px;
+            width: 100%;
+            font-weight: 700;
+        }
+
+        .btn-clean {
+            background: #3a3f47;
+            color: #e8e8e8;
+            font-size: calc(var(--btn-size) - 1px);
+            margin-bottom: 0;
+        }
+
+        .btn:focus {
+            background: #0056b3;
+            outline: 2px solid #fff;
+        }
+
+        .btn-clean:focus { background: #555b65; }
+
+        .btn-install {
+            background: #3a3f47;
+            color: #aaa;
+            width: 100%;
+            margin-bottom: 0;
+            font-size: calc(var(--btn-size) - 1px);
+        }
+
+        .btn-install.is-ready {
+            background: #1a3d1a;
+            color: #39ff14;
+        }
+
+        .btn-install.is-ready:focus {
+            background: #245a24;
+            outline: none;
+            box-shadow: 0 0 0 2px #39ff14;
+        }
+
+        .btn-install.is-not-ready {
+            background: #3a3f47;
+            color: #aaa;
+        }
+
+        .box-ready-install .btn-cancel {
+            display: none !important;
+        }
+
+        .box-ready-install .btn-dl {
+            width: 100%;
+        }
+
+        .btn-cancel {
+            display: none;
+            background: #8b2e2e;
+            color: #fff;
+            width: calc(50% - 3px);
+            margin-bottom: 8px;
+        }
+
+        .btn-dl { width: 100%; }
+
+        .box-downloading .btn-dl {
+            width: calc(50% - 3px);
+        }
+
+        .box-downloading .btn-cancel {
+            display: inline-block;
+        }
+
+        .btn-cancel:focus { background: #a83232; }
+
+        .progress-container {
+            width: 100%;
+            background: #333;
+            height: 18px;
+            border-radius: 10px;
+            margin: 12px auto 0;
+            display: none;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #007bff, #00d4ff);
+            transition: width 0.2s ease;
+        }
+
+        .timer-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 11px;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+            z-index: 2;
+        }
+
+        .footer {
+            flex-shrink: 0;
+            margin-top: auto;
+            text-align: center;
+            padding: 40px 12px max(28px, env(safe-area-inset-bottom, 28px));
+            color: #888;
+            font-size: 12px;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+
+        /* ØªÙ„ÙØ§Ø²: Ø´Ø¨ÙƒØ© ÙƒÙ…Ø§ ÙƒØ§Ù†Øª â€” Ù„Ø§ ØªØªØ£Ø«Ø± Ø¨Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª Ø§Ù„Ù…ÙˆØ¨Ø§ÙŠÙ„ */
+        @media (min-width: 901px) {
+            body {
+                height: 100vh;
+            }
+            .cards-grid {
+                display: grid;
+                grid-template-columns: repeat(var(--card-cols), minmax(0, 1fr));
+                overflow: visible;
+                flex-direction: unset;
+                flex-wrap: unset;
+                scroll-snap-type: none;
+                padding: 0;
+            }
+            .box {
+                flex: unset;
+                min-width: 0;
+                max-width: none;
+                scroll-snap-align: unset;
+            }
+            .box:focus,
+            .box:focus-within {
+                transform: none;
+            }
+            .section-head {
+                transition: opacity 0.25s ease, max-height 0.25s ease, margin-bottom 0.25s ease;
+                max-height: 72px;
+                overflow: hidden;
+            }
+            .section-head.tv-hidden {
+                opacity: 0;
+                max-height: 0;
+                margin-bottom: 0 !important;
+                visibility: hidden;
+            }
+            .box.tv-inside {
+                border-color: #00b4ff;
+                box-shadow: 0 0 18px rgba(0, 180, 255, 0.35);
+            }
+        }
+
+        /* ØªÙ„ÙØ§Ø² / Ø´Ø§Ø´Ø§Øª Ø¹Ø±ÙŠØ¶Ø© */
+        @media (min-width: 1024px) and (min-height: 540px) {
+            :root {
+                --card-cols: 3;
+                --card-gap: 16px;
+                --box-pad-y: 14px;
+                --box-pad-x: 12px;
+                --card-title-size: 16px;
+                --btn-size: 13px;
+                --btn-pad-y: 10px;
+                --section-title-size: 22px;
+                --section-pad-x: 16px;
+            }
+        }
+
+        @media (min-width: 1600px) and (min-height: 720px) {
+            :root {
+                --card-gap: 18px;
+                --card-title-size: 17px;
+                --btn-size: 14px;
+                --section-title-size: 24px;
+            }
+        }
+
+        /* ØªØ§Ø¨Ù„Øª / Ù…ÙˆØ¨Ø§ÙŠÙ„ Ø£ÙÙ‚ÙŠ */
+        @media (max-width: 1023px) {
+            :root {
+                --card-cols: 2;
+                --card-gap: 12px;
+                --section-title-size: 18px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .columns {
+                flex-direction: column;
+                align-items: center;
+                padding: 0 16px;
+            }
+            .section-divider {
+                width: auto;
+                height: 2px;
+                margin: 8px 20px;
+                background: linear-gradient(90deg, transparent, rgba(0, 220, 255, 0.5), transparent);
+            }
+            :root {
+                --section-pad-x: 0;
+            }
+            .section {
+                width: 100%;
+                max-width: 540px;
+                padding-bottom: 12px;
+                min-height: auto;
+            }
+            .section-head {
+                justify-content: center;
+            }
+
+            /* موبايل: بوكسين في المنتصف (شبكة 2 أعمدة) */
+            .cards-grid {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 12px;
+                width: 100%;
+                max-width: 520px;
+                margin: 0 auto;
+                overflow: visible;
+                padding: 4px 0 10px;
+            }
+            .box {
+                flex: unset;
+                min-width: 0;
+                width: 100%;
+                max-width: none;
+                scroll-snap-align: unset;
+            }
+            .footer {
+                padding: 48px 12px max(32px, env(safe-area-inset-bottom, 32px));
+            }
+        }
+
+        /* موبايل */
+        @media (max-width: 640px) {
+            :root {
+                --card-gap: 10px;
+                --box-pad-y: 10px;
+                --box-pad-x: 8px;
+                --card-title-size: 13px;
+                --btn-size: 11px;
+                --btn-pad-y: 8px;
+                --section-title-size: 16px;
+            }
+            .brand { font-size: 18px; }
+            .section {
+                max-width: 100%;
+            }
+            .cards-grid {
+                max-width: 100%;
+                gap: 10px;
+                padding: 4px 8px 10px;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .cards-grid {
+                gap: 8px;
+                padding: 4px 6px 10px;
+            }
+        }
+
+        /* Ø§Ø±ØªÙØ§Ø¹ Ù‚ØµÙŠØ± (Ù…ÙˆØ¨Ø§ÙŠÙ„ Ø£ÙÙ‚ÙŠ / Ø´Ø§Ø´Ø§Øª Ù…Ù†Ø®ÙØ¶Ø©) */
+        @media (max-height: 520px) {
+            :root {
+                --card-gap: 8px;
+                --box-pad-y: 8px;
+                --box-pad-x: 8px;
+                --btn-pad-y: 6px;
+                --section-title-size: 15px;
+            }
+            .section-head { margin-bottom: 10px; }
+            .title-wrapper { margin-bottom: 8px; padding-bottom: 6px; }
+            .top-glow-down { height: 14px; }
+        }
+
+        @media (max-height: 520px) and (min-width: 901px) {
+            :root {
+                --card-cols: 4;
+            }
+        }
+
+        /* ØªÙ„ÙØ§Ø² Ø¨Ø¹Ø±Ø¶ ÙƒØ¨ÙŠØ± ÙˆÙ‚Ø³Ù…ÙŠÙ† Ø¬Ù†Ø¨ Ø¨Ø¹Ø¶ */
+        @media (min-width: 1024px) and (max-width: 1399px) and (min-height: 540px) {
+            :root {
+                --card-cols: 2;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="top-header">
+        <div class="top-bar">
+            <h1 class="brand">𝑫𝑹𝑨𝑮𝑶𝑵 𝑺𝑯𝑶𝑾 Game Store</h1>
+        </div>
+        <div class="top-glow-down" aria-hidden="true"></div>
+    </header>
+
+    <div class="main-scroll">
+        <div class="scroll-body">
+        <div class="columns">
+            <section class="section" aria-label="For Android">
+                <div class="section-head">
+                    <h2 class="section-title">For Android</h2>
+                </div>
+                <div class="cards-grid">
+                    <div class="box" tabindex="0" onfocus="resetBox(this)">
+                        <div class="title-wrapper">
+                            <h2>saga-gnaras</h2>
+                        </div>
+                        <div class="btn-group">
+                            <button type="button" class="btn" onclick="startAction(this, 'https://github.com/DRAGON-CHEAT/960/releases/download/1.2/extension2_M-ok.apk')">تحميل التطبيق</button>
+                            <button type="button" class="btn btn-install is-not-ready">تثبيت الان</button>
+                            <div class="progress-container">
+                                <div class="timer-text">0%</div>
+                                <div class="progress-bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box" tabindex="0" onfocus="resetBox(this)">
+                        <div class="title-wrapper">
+                            <h2>natando</h2>
+                        </div>
+                        <div class="btn-group">
+                            <button type="button" class="btn" onclick="startAction(this, 'https://github.com/DRAGON-CHEAT/960/releases/download/1.0/extension1-ip-ok.apk')">تحميل التطبيق</button>
+                            <button type="button" class="btn btn-install is-not-ready">تثبيت الان</button>
+                            <div class="progress-container">
+                                <div class="timer-text">0%</div>
+                                <div class="progress-bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="section-divider" aria-hidden="true"></div>
+
+            <section class="section" aria-label="For Android Tv">
+                <div class="section-head">
+                    <h2 class="section-title">For Android Tv</h2>
+                </div>
+                <div class="cards-grid">
+                    <div class="box" tabindex="0" onfocus="resetBox(this)">
+                        <div class="title-wrapper">
+                            <h2>saga-ganaras</h2>
+                        </div>
+                        <div class="btn-group">
+                            <button type="button" class="btn" onclick="startAction(this, 'https://github.com/DRAGON-CHEAT/960/releases/download/1.3/extension2_Tv-ok.apk')">تحميل التطبيق</button>
+                            <button type="button" class="btn btn-install is-not-ready">تثبيت الان</button>
+                            <div class="progress-container">
+                                <div class="timer-text">0%</div>
+                                <div class="progress-bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box" tabindex="0" onfocus="resetBox(this)">
+                        <div class="title-wrapper">
+                            <h2>natando
+                           </h2>
+                        </div>
+                        <div class="btn-group">
+                            <button type="button" class="btn" onclick="startAction(this, 'https://github.com/DRAGON-CHEAT/960/releases/download/1.0/extension1-ip-ok.apk')">تحميل التطبيق</button>
+                            <button type="button" class="btn btn-install is-not-ready">تثبيت الان</button>
+                            <div class="progress-container">
+                                <div class="timer-text">0%</div>
+                                <div class="progress-bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="footer">Build by DraGon Show™_2026</div>
+        </div>
+    </div>
+سكربت  https://drive.usercontent.google.com/u/0/uc?id=1Elec8F9naFkcYzoV2eGL8zbreZJX_f7T&export=download 
+
+    
+</body>
+</html>
