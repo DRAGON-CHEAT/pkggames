@@ -610,8 +610,8 @@
                         <div class="btn-group">
                             <button type="button" class="btn btn-details" onclick="toggleDetails(this)">عرض تفصيل</button>
                             <button type="button" class="btn btn-download" onclick="showStorageChoice(this)">تحميل ملف</button>
-                            <button type="button" class="btn btn-storage internal" onclick="startDownload(this, 'internal')">تخزين داخلي</button>
-                            <button type="button" class="btn btn-storage external" onclick="startDownload(this, 'external')">تخزين خارجي USB/SD</button>
+                            <button type="button" class="btn btn-storage internal" onclick="startDownload('box-android-saga', 'https://drive.usercontent.google.com/u/0/uc?id=1KMvRjVoMflh2AhVqIhhh7leFL5F3diaJ&amp;export=download', 'internal')">تخزين داخلي</button>
+                            <button type="button" class="btn btn-storage external" onclick="startDownload('box-android-saga', 'https://drive.usercontent.google.com/u/0/uc?id=1KMvRjVoMflh2AhVqIhhh7leFL5F3diaJ&amp;export=download', 'external')">تخزين خارجي USB/SD</button>
                             <div class="progress-container">
                                 <div class="timer-text">0%</div>
                                 <div class="progress-bar"></div>
@@ -627,8 +627,8 @@
                         <div class="btn-group">
                             <button type="button" class="btn btn-details" onclick="toggleDetails(this)">عرض تفصيل</button>
                             <button type="button" class="btn btn-download" onclick="showStorageChoice(this)">تحميل ملف</button>
-                            <button type="button" class="btn btn-storage internal" onclick="startDownload(this, 'internal')">تخزين داخلي</button>
-                            <button type="button" class="btn btn-storage external" onclick="startDownload(this, 'external')">تخزين خارجي USB/SD</button>
+                            <button type="button" class="btn btn-storage internal" onclick="startDownload('box-android-natando', 'https://drive.usercontent.google.com/u/0/uc?id=1KMvRjVoMflh2AhVqIhhh7leFL5F3diaJ&amp;export=download', 'internal')">تخزين داخلي</button>
+                            <button type="button" class="btn btn-storage external" onclick="startDownload('box-android-natando', 'https://drive.usercontent.google.com/u/0/uc?id=1KMvRjVoMflh2AhVqIhhh7leFL5F3diaJ&amp;export=download', 'external')">تخزين خارجي USB/SD</button>
                             <div class="progress-container">
                                 <div class="timer-text">0%</div>
                                 <div class="progress-bar"></div>
@@ -654,8 +654,8 @@
                         <div class="btn-group">
                             <button type="button" class="btn btn-details" onclick="toggleDetails(this)">عرض تفصيل</button>
                             <button type="button" class="btn btn-download" onclick="showStorageChoice(this)">تحميل ملف</button>
-                            <button type="button" class="btn btn-storage internal" onclick="startDownload(this, 'internal')">تخزين داخلي</button>
-                            <button type="button" class="btn btn-storage external" onclick="startDownload(this, 'external')">تخزين خارجي USB/SD</button>
+                            <button type="button" class="btn btn-storage internal" onclick="startDownload('box-tv-saga', 'https://drive.usercontent.google.com/u/0/uc?id=1KMvRjVoMflh2AhVqIhhh7leFL5F3diaJ&amp;export=download', 'internal')">تخزين داخلي</button>
+                            <button type="button" class="btn btn-storage external" onclick="startDownload('box-tv-saga', 'https://drive.usercontent.google.com/u/0/uc?id=1KMvRjVoMflh2AhVqIhhh7leFL5F3diaJ&amp;export=download', 'external')">تخزين خارجي USB/SD</button>
                             <div class="progress-container">
                                 <div class="timer-text">0%</div>
                                 <div class="progress-bar"></div>
@@ -671,8 +671,8 @@
                         <div class="btn-group">
                             <button type="button" class="btn btn-details" onclick="toggleDetails(this)">عرض تفصيل</button>
                             <button type="button" class="btn btn-download" onclick="showStorageChoice(this)">تحميل ملف</button>
-                            <button type="button" class="btn btn-storage internal" onclick="startDownload(this, 'internal')">تخزين داخلي</button>
-                            <button type="button" class="btn btn-storage external" onclick="startDownload(this, 'external')">تخزين خارجي USB/SD</button>
+                            <button type="button" class="btn btn-storage internal" onclick="startDownload('box-tv-natando', 'https://drive.usercontent.google.com/u/0/uc?id=1KMvRjVoMflh2AhVqIhhh7leFL5F3diaJ&amp;export=download', 'internal')">تخزين داخلي</button>
+                            <button type="button" class="btn btn-storage external" onclick="startDownload('box-tv-natando', 'https://drive.usercontent.google.com/u/0/uc?id=1KMvRjVoMflh2AhVqIhhh7leFL5F3diaJ&amp;export=download', 'external')">تخزين خارجي USB/SD</button>
                             <div class="progress-container">
                                 <div class="timer-text">0%</div>
                                 <div class="progress-bar"></div>
@@ -717,23 +717,36 @@
         box.classList.remove('done', 'error');
     };
 
-    window.startDownload = function (btn, storage) {
-        var box = getBox(btn);
-        var url = box.getAttribute('data-url');
-        var boxId = box.id;
-        if (!url || !boxId) return;
+    var DRIVE_URL = 'https://drive.usercontent.google.com/u/0/uc?id=1KMvRjVoMflh2AhVqIhhh7leFL5F3diaJ&export=download';
 
-        if (typeof Android === 'undefined') {
+    window.startDownload = function (boxIdOrBtn, urlOrStorage, storage) {
+        var box, url, boxId, storageType;
+
+        if (typeof boxIdOrBtn === 'string') {
+            boxId = boxIdOrBtn;
+            url = urlOrStorage;
+            storageType = storage;
+            box = document.getElementById(boxId);
+        } else {
+            box = getBox(boxIdOrBtn);
+            url = box.getAttribute('data-url');
+            boxId = box.id;
+            storageType = urlOrStorage;
+        }
+
+        if (!box || !url || !boxId) return;
+
+        if (typeof AndroidInterface === 'undefined') {
             alert('افتح المتجر من داخل تطبيق المحاكي.');
             return;
         }
 
-        var path = storage === 'internal'
-            ? Android.getInternalPath()
-            : Android.getExternalPath();
+        var path = storageType === 'internal'
+            ? AndroidInterface.getInternalPath()
+            : AndroidInterface.getExternalPath();
 
         if (!path) {
-            alert(storage === 'external'
+            alert(storageType === 'external'
                 ? 'لم يتم العثور على USB/SD. وصّل الذاكرة الخارجية أو اختر التخزين الداخلي.'
                 : 'مسار التخزين الداخلي غير متاح.');
             return;
@@ -746,7 +759,7 @@
         if (bar) bar.style.display = 'block';
         if (status) status.textContent = 'جاري التحميل... سيتم فك الملف في: ' + path;
         updateDownloadProgress(boxId, 1);
-        Android.downloadAndUnzip(url, path, boxId);
+        AndroidInterface.downloadAndUnzip(url, path, boxId);
     };
 
     window.updateDownloadProgress = function (boxId, progress) {
@@ -762,14 +775,21 @@
     window.onUnzipComplete = function (boxId, success) {
         var box = document.getElementById(boxId);
         if (!box) return;
+
         box.classList.remove('box-downloading');
+
         var status = box.querySelector('.status-msg');
+
         if (success) {
             box.classList.add('done');
-            if (status) status.textContent = 'تم التحميل وفك الضغط بنجاح. أعد فحص المكتبة (RESCAN) لعرض الألعاب.';
+            if (status) {
+                status.textContent = 'تم التحميل وفك الضغط بنجاح! أعد فحص المكتبة (RESCAN) داخل المحاكي لعرض ألعابك الجديدة.';
+            }
         } else {
             box.classList.add('error');
-            if (status) status.textContent = 'فشل التحميل أو فك الضغط. تحقق من الرابط أو مساحة التخزين.';
+            if (status) {
+                status.textContent = 'فشل التحميل أو فك الضغط! تأكد من جودة اتصال الإنترنت أو توفر مساحة كافية (أكثر من 4 جيجا).';
+            }
         }
     };
 })();
