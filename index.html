@@ -37,7 +37,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 10px 24px 8px;
+            padding: max(32px, env(safe-area-inset-top, 32px)) 24px 10px;
             background:
                 linear-gradient(180deg,
                     rgba(0, 110, 130, 0.55) 0%,
@@ -122,11 +122,11 @@
         }
 
         .section-divider {
-            width: 2px;
-            flex-shrink: 0;
-            align-self: stretch;
-            background: linear-gradient(180deg, transparent 0%, transparent 6%, rgba(0, 220, 255, 0.55) 18%, rgba(0, 220, 255, 0.55) 82%, transparent 100%);
-            margin: 34px 0 20px;
+            display: none;
+        }
+
+        .section-head {
+            display: none;
         }
 
         .section-title {
@@ -151,13 +151,10 @@
                 transparent 100%);
         }
 
-        .section-head {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 16px;
-        }
-
         :root {
+            --android-green: #3DDC84;
+            --android-green-dark: #2EB872;
+            --android-green-deep: #00A956;
             --card-cols: 2;
             --card-gap: 14px;
             --box-pad-y: 12px;
@@ -216,11 +213,35 @@
         }
 
         .box:focus,
-        .box:focus-within {
-            border-color: #00b4ff;
+        .box:focus-within,
+        .box.box-focused {
+            border-color: var(--android-green);
             transform: scale(1.03);
             outline: none;
-            box-shadow: 0 0 18px rgba(0, 180, 255, 0.35);
+            box-shadow: 0 0 18px rgba(61, 220, 132, 0.45);
+        }
+
+        .box.box-inside {
+            border-color: var(--android-green);
+            transform: scale(1.04);
+            box-shadow:
+                0 0 0 3px rgba(61, 220, 132, 0.55),
+                0 0 24px rgba(61, 220, 132, 0.5);
+        }
+
+        .box.box-inside .title-wrapper {
+            border-bottom-color: rgba(61, 220, 132, 0.45);
+        }
+
+        .box.box-inside .title-wrapper h2 {
+            color: var(--android-green);
+            background: linear-gradient(90deg,
+                transparent 0%,
+                rgba(0, 80, 40, 0.42) 2%,
+                rgba(0, 120, 60, 0.78) 14%,
+                rgba(0, 120, 60, 0.78) 86%,
+                rgba(0, 80, 40, 0.42) 98%,
+                transparent 100%);
         }
 
         .title-wrapper {
@@ -256,8 +277,8 @@
         }
 
         .btn {
-            background: #007bff;
-            color: #fff;
+            background: var(--android-green);
+            color: #0a1a12;
             border: none;
             padding: var(--btn-pad-y) 8px;
             border-radius: 12px;
@@ -276,21 +297,22 @@
         }
 
         .btn:focus {
-            background: #0056b3;
-            outline: 2px solid #fff;
+            background: var(--android-green-dark);
+            outline: 2px solid var(--android-green);
+            box-shadow: 0 0 12px rgba(61, 220, 132, 0.55);
         }
 
         .btn-clean:focus { background: #555b65; }
 
         .btn-storage {
             display: none;
-            background: #0d6e3a;
+            background: var(--android-green-deep);
             color: #fff;
             width: calc(50% - 3px);
             margin-bottom: 8px;
         }
 
-        .btn-storage.external { background: #0b5ed7; }
+        .btn-storage.external { background: #1B8A4E; }
 
         .box.storage-visible .btn-storage { display: inline-block; }
 
@@ -379,7 +401,7 @@
         .progress-bar {
             width: 0%;
             height: 100%;
-            background: linear-gradient(90deg, #007bff, #00d4ff);
+            background: linear-gradient(90deg, var(--android-green-deep), var(--android-green));
             transition: width 0.2s ease;
         }
 
@@ -441,9 +463,10 @@
                 margin-bottom: 0 !important;
                 visibility: hidden;
             }
-            .box.tv-inside {
-                border-color: #00b4ff;
-                box-shadow: 0 0 18px rgba(0, 180, 255, 0.35);
+            .box.tv-inside,
+            .box.box-inside {
+                border-color: var(--android-green);
+                box-shadow: 0 0 18px rgba(61, 220, 132, 0.45);
             }
         }
 
@@ -598,11 +621,8 @@
         <div class="scroll-body">
         <div class="columns">
             <section class="section" aria-label="For Android">
-                <div class="section-head">
-                    <h2 class="section-title">For Android</h2>
-                </div>
                 <div class="cards-grid">
-                    <div class="box" id="box-android-saga" tabindex="0" data-url="https://drive.usercontent.google.com/u/0/uc?id=1KMvRjVoMflh2AhVqIhhh7leFL5F3diaJ&export=download" onfocus="resetBox(this)">
+                    <div class="box" id="box-android-saga" tabindex="0" data-url="https://drive.usercontent.google.com/u/0/uc?id=1KMvRjVoMflh2AhVqIhhh7leFL5F3diaJ&export=download">
                         <div class="title-wrapper">
                             <h2>saga-gnaras</h2>
                         </div>
@@ -619,7 +639,7 @@
                             <div class="status-msg"></div>
                         </div>
                     </div>
-                    <div class="box" id="box-android-natando" tabindex="0" data-url="https://drive.usercontent.google.com/u/0/uc?id=1KMvRjVoMflh2AhVqIhhh7leFL5F3diaJ&export=download" onfocus="resetBox(this)">
+                    <div class="box" id="box-android-natando" tabindex="0" data-url="https://drive.usercontent.google.com/u/0/uc?id=1KMvRjVoMflh2AhVqIhhh7leFL5F3diaJ&export=download">
                         <div class="title-wrapper">
                             <h2>natando</h2>
                         </div>
@@ -642,11 +662,8 @@
             <div class="section-divider" aria-hidden="true"></div>
 
             <section class="section" aria-label="For Android Tv">
-                <div class="section-head">
-                    <h2 class="section-title">For Android Tv</h2>
-                </div>
                 <div class="cards-grid">
-                    <div class="box" id="box-tv-saga" tabindex="0" data-url="https://drive.usercontent.google.com/u/0/uc?id=1KMvRjVoMflh2AhVqIhhh7leFL5F3diaJ&export=download" onfocus="resetBox(this)">
+                    <div class="box" id="box-tv-saga" tabindex="0" data-url="https://drive.usercontent.google.com/u/0/uc?id=1KMvRjVoMflh2AhVqIhhh7leFL5F3diaJ&export=download">
                         <div class="title-wrapper">
                             <h2>saga-ganaras</h2>
                         </div>
@@ -663,7 +680,7 @@
                             <div class="status-msg"></div>
                         </div>
                     </div>
-                    <div class="box" id="box-tv-natando" tabindex="0" data-url="https://drive.usercontent.google.com/u/0/uc?id=1KMvRjVoMflh2AhVqIhhh7leFL5F3diaJ&export=download" onfocus="resetBox(this)">
+                    <div class="box" id="box-tv-natando" tabindex="0" data-url="https://drive.usercontent.google.com/u/0/uc?id=1KMvRjVoMflh2AhVqIhhh7leFL5F3diaJ&export=download">
                         <div class="title-wrapper">
                             <h2>natando</h2>
                         </div>
@@ -715,6 +732,9 @@
         var box = getBox(btn);
         box.classList.add('storage-visible');
         box.classList.remove('done', 'error');
+        if (navMode === 'inside' && activeBox === box) {
+            getVisibleButtons(box).forEach(function (b) { b.tabIndex = 0; });
+        }
     };
 
     var DRIVE_URL = 'https://drive.usercontent.google.com/u/0/uc?id=1KMvRjVoMflh2AhVqIhhh7leFL5F3diaJ&export=download';
@@ -792,6 +812,126 @@
             }
         }
     };
+
+    var navMode = 'grid';
+    var activeBox = null;
+
+    var boxNav = {
+        'box-android-saga':    { up: null, down: 'box-android-natando', left: 'box-tv-saga', right: null },
+        'box-android-natando': { up: 'box-android-saga', down: null, left: 'box-tv-natando', right: null },
+        'box-tv-saga':         { up: null, down: 'box-tv-natando', left: null, right: 'box-android-saga' },
+        'box-tv-natando':      { up: 'box-tv-saga', down: null, left: null, right: 'box-android-natando' }
+    };
+
+    function getVisibleButtons(box) {
+        return Array.prototype.filter.call(
+            box.querySelectorAll('.btn-group .btn'),
+            function (btn) { return btn.offsetParent !== null && btn.style.display !== 'none'; }
+        );
+    }
+
+    function focusBox(boxId) {
+        var prev = document.querySelector('.box.box-focused');
+        if (prev && prev.id !== boxId) {
+            resetBox(prev);
+            prev.classList.remove('box-focused', 'box-inside');
+        }
+        var box = document.getElementById(boxId);
+        if (!box) return;
+        box.classList.add('box-focused');
+        box.focus();
+        activeBox = box;
+    }
+
+    function enterBox(box) {
+        navMode = 'inside';
+        activeBox = box;
+        box.classList.add('box-inside', 'details-open');
+        getVisibleButtons(box).forEach(function (btn) { btn.tabIndex = 0; });
+        var btns = getVisibleButtons(box);
+        if (btns.length) btns[0].focus();
+    }
+
+    function exitBox() {
+        if (!activeBox) return;
+        activeBox.querySelectorAll('.btn').forEach(function (btn) { btn.tabIndex = -1; });
+        activeBox.classList.remove('box-inside');
+        navMode = 'grid';
+        activeBox.focus();
+    }
+
+    function moveGrid(dir) {
+        if (!activeBox) return;
+        var nextId = boxNav[activeBox.id] && boxNav[activeBox.id][dir];
+        if (nextId) focusBox(nextId);
+    }
+
+    function moveInside(dir) {
+        if (!activeBox) return;
+        var btns = getVisibleButtons(activeBox);
+        if (!btns.length) return;
+        var idx = btns.indexOf(document.activeElement);
+        if (idx < 0) { btns[0].focus(); return; }
+        if (dir === 'down' && idx < btns.length - 1) btns[idx + 1].focus();
+        if (dir === 'up' && idx > 0) btns[idx - 1].focus();
+    }
+
+    function isBackKey(code) {
+        return code === 27 || code === 4 || code === 461 || code === 10009 || code === 8;
+    }
+
+    function isOkKey(code, key) {
+        return code === 13 || code === 23 || key === 'Enter' || key === ' ';
+    }
+
+    document.addEventListener('keydown', function (e) {
+        var code = e.keyCode || e.which;
+        var key = e.key;
+
+        if (navMode === 'grid') {
+            if (key === 'ArrowUp' || code === 38) { e.preventDefault(); moveGrid('up'); return; }
+            if (key === 'ArrowDown' || code === 40) { e.preventDefault(); moveGrid('down'); return; }
+            if (key === 'ArrowLeft' || code === 37) { e.preventDefault(); moveGrid('left'); return; }
+            if (key === 'ArrowRight' || code === 39) { e.preventDefault(); moveGrid('right'); return; }
+            if (isOkKey(code, key) && activeBox && document.activeElement === activeBox) {
+                e.preventDefault();
+                enterBox(activeBox);
+            }
+            return;
+        }
+
+        if (navMode === 'inside') {
+            if (isBackKey(code)) {
+                e.preventDefault();
+                exitBox();
+                return;
+            }
+            if (key === 'ArrowUp' || code === 38) { e.preventDefault(); moveInside('up'); return; }
+            if (key === 'ArrowDown' || code === 40) { e.preventDefault(); moveInside('down'); return; }
+            if (isOkKey(code, key) && document.activeElement && document.activeElement.classList.contains('btn')) {
+                document.activeElement.click();
+            }
+        }
+    });
+
+    document.querySelectorAll('.box').forEach(function (box) {
+        box.addEventListener('focus', function () {
+            if (navMode === 'grid') {
+                document.querySelectorAll('.box').forEach(function (b) {
+                    if (b !== box) {
+                        b.classList.remove('box-focused', 'box-inside');
+                    }
+                });
+                box.classList.add('box-focused');
+                activeBox = box;
+            }
+        });
+    });
+
+    window.addEventListener('load', function () {
+        document.querySelectorAll('.box .btn').forEach(function (btn) { btn.tabIndex = -1; });
+        focusBox('box-android-saga');
+    });
 })();
 </script>
 </body>
