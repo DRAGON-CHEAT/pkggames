@@ -1,4 +1,4 @@
-
+﻿
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -206,11 +206,7 @@
             z-index: 1;
         }
 
-        .section[aria-label="For Android"] .box {
-            background-image: url("https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=640&q=80");
-        }
-
-        .section[aria-label="For Android Tv"] .box {
+        .section .box {
             background-image: url("https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=640&q=80");
         }
 
@@ -288,6 +284,8 @@
             margin: 0 0 8px;
             width: 100%;
             font-weight: 700;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .btn-clean {
@@ -297,10 +295,13 @@
             margin-bottom: 0;
         }
 
-        .btn:focus {
+        .btn:focus,
+        .btn.btn-nav-focus,
+        .btn:focus-visible {
             background: var(--btn-cyan-dark);
-            outline: 2px solid #7df4ff;
-            box-shadow: 0 0 12px rgba(77, 184, 217, 0.55);
+            outline: none;
+            border-radius: 12px;
+            box-shadow: 0 0 0 3px #7df4ff, 0 0 14px rgba(77, 184, 217, 0.6);
         }
 
         .btn-clean:focus { background: #555b65; }
@@ -322,6 +323,12 @@
         .box.storage-visible .btn-storage { display: inline-block; }
 
         .box.storage-visible .btn-download { width: 100%; margin-bottom: 6px; }
+
+        .box.box-downloading .btn-details,
+        .box.box-downloading .btn-download,
+        .box.box-downloading .btn-storage { display: none !important; }
+
+        .box.box-downloading .progress-container { display: block !important; }
 
         .details-panel {
             display: none;
@@ -433,7 +440,7 @@
             font-weight: bold;
         }
 
-        /* ØªÙ„ÙØ§Ø²: Ø´Ø¨ÙƒØ© ÙƒÙ…Ø§ ÙƒØ§Ù†Øª â€” Ù„Ø§ ØªØªØ£Ø«Ø± Ø¨Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª Ø§Ù„Ù…ÙˆØ¨Ø§ÙŠÙ„ */
+        /* Ã˜ÂªÃ™â€žÃ™ÂÃ˜Â§Ã˜Â²: Ã˜Â´Ã˜Â¨Ã™Æ’Ã˜Â© Ã™Æ’Ã™â€¦Ã˜Â§ Ã™Æ’Ã˜Â§Ã™â€ Ã˜Âª Ã¢â‚¬â€ Ã™â€žÃ˜Â§ Ã˜ÂªÃ˜ÂªÃ˜Â£Ã˜Â«Ã˜Â± Ã˜Â¨Ã˜Â¥Ã˜Â¹Ã˜Â¯Ã˜Â§Ã˜Â¯Ã˜Â§Ã˜Âª Ã˜Â§Ã™â€žÃ™â€¦Ã™Ë†Ã˜Â¨Ã˜Â§Ã™Å Ã™â€ž */
         @media (min-width: 901px) {
             body {
                 height: 100vh;
@@ -475,10 +482,10 @@
             }
         }
 
-        /* ØªÙ„ÙØ§Ø² / Ø´Ø§Ø´Ø§Øª Ø¹Ø±ÙŠØ¶Ø© */
+        /* Ã˜ÂªÃ™â€žÃ™ÂÃ˜Â§Ã˜Â² / Ã˜Â´Ã˜Â§Ã˜Â´Ã˜Â§Ã˜Âª Ã˜Â¹Ã˜Â±Ã™Å Ã˜Â¶Ã˜Â© */
         @media (min-width: 1024px) and (min-height: 540px) {
             :root {
-                --card-cols: 3;
+                --card-cols: 4;
                 --card-gap: 16px;
                 --box-pad-y: 14px;
                 --box-pad-x: 12px;
@@ -499,7 +506,7 @@
             }
         }
 
-        /* ØªØ§Ø¨Ù„Øª / Ù…ÙˆØ¨Ø§ÙŠÙ„ Ø£ÙÙ‚ÙŠ */
+        /* Ã˜ÂªÃ˜Â§Ã˜Â¨Ã™â€žÃ˜Âª / Ã™â€¦Ã™Ë†Ã˜Â¨Ã˜Â§Ã™Å Ã™â€ž Ã˜Â£Ã™ÂÃ™â€šÃ™Å  */
         @media (max-width: 1023px) {
             :root {
                 --card-cols: 2;
@@ -537,7 +544,7 @@
                 justify-content: center;
             }
 
-            /* موبايل: بوكسين في المنتصف (شبكة 2 أعمدة) */
+            /* Ù…ÙˆØ¨Ø§ÙŠÙ„: Ø¨ÙˆÙƒØ³ÙŠÙ† ÙÙŠ Ø§Ù„Ù…Ù†ØªØµÙ (Ø´Ø¨ÙƒØ© 2 Ø£Ø¹Ù…Ø¯Ø©) */
             .cards-grid {
                 display: grid;
                 grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -560,7 +567,7 @@
             }
         }
 
-        /* موبايل */
+        /* Ù…ÙˆØ¨Ø§ÙŠÙ„ */
         @media (max-width: 640px) {
             :root {
                 --card-gap: 10px;
@@ -589,7 +596,7 @@
             }
         }
 
-        /* Ø§Ø±ØªÙØ§Ø¹ Ù‚ØµÙŠØ± (Ù…ÙˆØ¨Ø§ÙŠÙ„ Ø£ÙÙ‚ÙŠ / Ø´Ø§Ø´Ø§Øª Ù…Ù†Ø®ÙØ¶Ø©) */
+        /* Ã˜Â§Ã˜Â±Ã˜ÂªÃ™ÂÃ˜Â§Ã˜Â¹ Ã™â€šÃ˜ÂµÃ™Å Ã˜Â± (Ã™â€¦Ã™Ë†Ã˜Â¨Ã˜Â§Ã™Å Ã™â€ž Ã˜Â£Ã™ÂÃ™â€šÃ™Å  / Ã˜Â´Ã˜Â§Ã˜Â´Ã˜Â§Ã˜Âª Ã™â€¦Ã™â€ Ã˜Â®Ã™ÂÃ˜Â¶Ã˜Â©) */
         @media (max-height: 520px) {
             :root {
                 --card-gap: 8px;
@@ -603,13 +610,13 @@
             .top-glow-down { height: 14px; }
         }
 
-        @media (max-height: 520px) and (min-width: 901px) {
+        @media (min-height: 520px) and (min-width: 901px) {
             :root {
-                --card-cols: 4;
+                --card-cols: 6;
             }
         }
 
-        /* ØªÙ„ÙØ§Ø² Ø¨Ø¹Ø±Ø¶ ÙƒØ¨ÙŠØ± ÙˆÙ‚Ø³Ù…ÙŠÙ† Ø¬Ù†Ø¨ Ø¨Ø¹Ø¶ */
+        /* Ã˜ÂªÃ™â€žÃ™ÂÃ˜Â§Ã˜Â² Ã˜Â¨Ã˜Â¹Ã˜Â±Ã˜Â¶ Ã™Æ’Ã˜Â¨Ã™Å Ã˜Â± Ã™Ë†Ã™â€šÃ˜Â³Ã™â€¦Ã™Å Ã™â€  Ã˜Â¬Ã™â€ Ã˜Â¨ Ã˜Â¨Ã˜Â¹Ã˜Â¶ */
         @media (min-width: 1024px) and (max-width: 1399px) and (min-height: 540px) {
             :root {
                 --card-cols: 2;
@@ -621,7 +628,7 @@
 
     <header class="top-header">
         <div class="top-bar">
-            <h1 class="brand">𝑫𝑹𝑨𝑮𝑶𝑵 𝑺𝑯𝑶𝑾 Game Store</h1>
+            <h1 class="brand">ð‘«ð‘¹ð‘¨ð‘®ð‘¶ð‘µ ð‘ºð‘¯ð‘¶ð‘¾ Game Store</h1>
         </div>
         <div class="top-glow-down" aria-hidden="true"></div>
     </header>
@@ -629,133 +636,140 @@
     <div class="main-scroll">
         <div class="scroll-body">
         <div class="columns">
-            <section class="section" aria-label="For Android">
-                <div class="cards-grid">
-                    <div class="box" id="box-android-saga" tabindex="0" data-url="https://drive.usercontent.google.com/u/0/uc?id=1KMvRjVoMflh2AhVqIhhh7leFL5F3diaJ&export=download">
-                        <div class="title-wrapper">
-                            <h2>saga-gnaras</h2>
-                        </div>
-                        <div class="details-panel">حزمة ألعاب Android — بعد الاكتمال ستُفك في مجلد dragonroms الذي تختاره.</div>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-details" onclick="toggleDetails(this)">عرض تفصيل</button>
-                            <button type="button" class="btn btn-download" onclick="showStorageChoice(this)">تحميل ملف</button>
-                            <button type="button" class="btn btn-storage internal" onclick="startDownload('box-android-saga', 'https://drive.usercontent.google.com/u/0/uc?id=1KMvRjVoMflh2AhVqIhhh7leFL5F3diaJ&amp;export=download', 'internal')">تخزين داخلي</button>
-                            <button type="button" class="btn btn-storage external" onclick="startDownload('box-android-saga', 'https://drive.usercontent.google.com/u/0/uc?id=1KMvRjVoMflh2AhVqIhhh7leFL5F3diaJ&amp;export=download', 'external')">تخزين خارجي USB/SD</button>
-                            <div class="progress-container">
-                                <div class="timer-text">0%</div>
-                                <div class="progress-bar"></div>
-                            </div>
-                            <div class="status-msg"></div>
-                        </div>
-                    </div>
-                    <div class="box" id="box-android-natando" tabindex="0" data-url="https://drive.usercontent.google.com/u/0/uc?id=1KMvRjVoMflh2AhVqIhhh7leFL5F3diaJ&export=download">
-                        <div class="title-wrapper">
-                            <h2>natando</h2>
-                        </div>
-                        <div class="details-panel">حزمة ألعاب Android — اختر التخزين الداخلي أو USB/SD ثم ابدأ التحميل.</div>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-details" onclick="toggleDetails(this)">عرض تفصيل</button>
-                            <button type="button" class="btn btn-download" onclick="showStorageChoice(this)">تحميل ملف</button>
-                            <button type="button" class="btn btn-storage internal" onclick="startDownload('box-android-natando', 'https://drive.usercontent.google.com/u/0/uc?id=1KMvRjVoMflh2AhVqIhhh7leFL5F3diaJ&amp;export=download', 'internal')">تخزين داخلي</button>
-                            <button type="button" class="btn btn-storage external" onclick="startDownload('box-android-natando', 'https://drive.usercontent.google.com/u/0/uc?id=1KMvRjVoMflh2AhVqIhhh7leFL5F3diaJ&amp;export=download', 'external')">تخزين خارجي USB/SD</button>
-                            <div class="progress-container">
-                                <div class="timer-text">0%</div>
-                                <div class="progress-bar"></div>
-                            </div>
-                            <div class="status-msg"></div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <div class="section-divider" aria-hidden="true"></div>
-
-            <section class="section" aria-label="For Android Tv">
-                <div class="cards-grid">
-                    <div class="box" id="box-tv-saga" tabindex="0" data-url="https://drive.usercontent.google.com/u/0/uc?id=1KMvRjVoMflh2AhVqIhhh7leFL5F3diaJ&export=download">
-                        <div class="title-wrapper">
-                            <h2>saga-ganaras</h2>
-                        </div>
-                        <div class="details-panel">حزمة ألعاب Android TV — تُفك تلقائياً في dragonroms بعد اكتمال التحميل.</div>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-details" onclick="toggleDetails(this)">عرض تفصيل</button>
-                            <button type="button" class="btn btn-download" onclick="showStorageChoice(this)">تحميل ملف</button>
-                            <button type="button" class="btn btn-storage internal" onclick="startDownload('box-tv-saga', 'https://drive.usercontent.google.com/u/0/uc?id=1KMvRjVoMflh2AhVqIhhh7leFL5F3diaJ&amp;export=download', 'internal')">تخزين داخلي</button>
-                            <button type="button" class="btn btn-storage external" onclick="startDownload('box-tv-saga', 'https://drive.usercontent.google.com/u/0/uc?id=1KMvRjVoMflh2AhVqIhhh7leFL5F3diaJ&amp;export=download', 'external')">تخزين خارجي USB/SD</button>
-                            <div class="progress-container">
-                                <div class="timer-text">0%</div>
-                                <div class="progress-bar"></div>
-                            </div>
-                            <div class="status-msg"></div>
-                        </div>
-                    </div>
-                    <div class="box" id="box-tv-natando" tabindex="0" data-url="https://drive.usercontent.google.com/u/0/uc?id=1KMvRjVoMflh2AhVqIhhh7leFL5F3diaJ&export=download">
-                        <div class="title-wrapper">
-                            <h2>natando</h2>
-                        </div>
-                        <div class="details-panel">حزمة ألعاب Android TV — اختر مسار التخزين ثم انتظر اكتمال فك الضغط.</div>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-details" onclick="toggleDetails(this)">عرض تفصيل</button>
-                            <button type="button" class="btn btn-download" onclick="showStorageChoice(this)">تحميل ملف</button>
-                            <button type="button" class="btn btn-storage internal" onclick="startDownload('box-tv-natando', 'https://drive.usercontent.google.com/u/0/uc?id=1KMvRjVoMflh2AhVqIhhh7leFL5F3diaJ&amp;export=download', 'internal')">تخزين داخلي</button>
-                            <button type="button" class="btn btn-storage external" onclick="startDownload('box-tv-natando', 'https://drive.usercontent.google.com/u/0/uc?id=1KMvRjVoMflh2AhVqIhhh7leFL5F3diaJ&amp;export=download', 'external')">تخزين خارجي USB/SD</button>
-                            <div class="progress-container">
-                                <div class="timer-text">0%</div>
-                                <div class="progress-bar"></div>
-                            </div>
-                            <div class="status-msg"></div>
-                        </div>
-                    </div>
-                </div>
+            <section class="section" aria-label="Emulators">
+                <div class="cards-grid" id="main-grid"></div>
             </section>
         </div>
 
-        <div class="footer">Build by DraGon Show™_2026</div>
+        <div class="footer">Build by DraGon Showâ„¢_2026</div>
         </div>
     </div>
 
 <script>
 (function () {
-    function getBox(el) {
-        return el.closest('.box');
+    var DRIVE_URL = 'https://drive.usercontent.google.com/u/0/uc?id=1KMvRjVoMflh2AhVqIhhh7leFL5F3diaJ&export=download';
+    var TXT = {
+        details: 'عرض تفصيل',
+        closeDetails: 'غلق تفصيل',
+        download: 'تحميل ملف',
+        cancelDl: 'الغاء تحميل',
+        storageInt: 'تخزين داخلي',
+        storageExt: 'تخزين خارجي USB/SD',
+        downloading: 'جاري التحميل...',
+        done: 'مكتمل أرجع اعمل إعادة المسح √',
+        fail: 'فشل التحميل أو فك الضغط!',
+        noApp: 'افتح المتجر من داخل تطبيق المحاكي.',
+        noUsb: 'لم يتم العثور على USB/SD.',
+        noInternal: 'مسار التخزين الداخلي غير متاح.'
+    };
+    function emuDesc(name) {
+        return 'حزمة ROMs لمحاكي ' + name + ' — تُفك في مجلد dragonroms.';
+    }
+    var EMULATORS = [
+        { id: 'box-sega', name: 'Sega Genesis', desc: emuDesc('Sega') },
+        { id: 'box-atari', name: 'Atari 2600', desc: emuDesc('Atari') },
+        { id: 'box-nintendo', name: 'Nintendo NES', desc: emuDesc('Nintendo') },
+        { id: 'box-snes', name: 'Super Nintendo', desc: emuDesc('SNES') },
+        { id: 'box-n64', name: 'Nintendo 64', desc: emuDesc('N64') },
+        { id: 'box-gb', name: 'Game Boy', desc: emuDesc('Game Boy') },
+        { id: 'box-ps1', name: 'PlayStation', desc: emuDesc('PS1') },
+        { id: 'box-psp', name: 'PSP', desc: emuDesc('PSP') },
+        { id: 'box-dc', name: 'Dreamcast', desc: emuDesc('Dreamcast') },
+        { id: 'box-mame', name: 'MAME Arcade', desc: emuDesc('MAME') },
+        { id: 'box-neogeo', name: 'Neo Geo', desc: emuDesc('Neo Geo') },
+        { id: 'box-pce', name: 'PC Engine', desc: emuDesc('PC Engine') }
+    ];
+    var navMode = 'grid';
+    var activeBox = null;
+    var insideBtnIdx = 0;
+    var okLock = 0;
+
+    function getBox(el) { return el.closest('.box'); }
+
+    function isBtnVisible(btn) {
+        return btn && window.getComputedStyle(btn).display !== 'none';
+    }
+
+    function getVisibleButtons(box) {
+        return Array.prototype.filter.call(box.querySelectorAll('.btn-group .btn'), isBtnVisible);
+    }
+
+    function getAllBoxes() {
+        return Array.prototype.slice.call(document.querySelectorAll('.box'));
+    }
+
+    function buildGrid() {
+        var grid = document.getElementById('main-grid');
+        if (!grid) return;
+        grid.innerHTML = EMULATORS.map(function (emu) {
+            return '<div class="box" id="' + emu.id + '" tabindex="-1" data-url="' + DRIVE_URL + '">' +
+                '<div class="title-wrapper"><h2>' + emu.name + '</h2></div>' +
+                '<div class="details-panel">' + emu.desc + '</div><div class="btn-group">' +
+                '<button type="button" class="btn btn-details" tabindex="-1">' + TXT.details + '</button>' +
+                '<button type="button" class="btn btn-download" tabindex="-1">' + TXT.download + '</button>' +
+                '<button type="button" class="btn btn-storage internal" tabindex="-1">' + TXT.storageInt + '</button>' +
+                '<button type="button" class="btn btn-storage external" tabindex="-1">' + TXT.storageExt + '</button>' +
+                '<div class="progress-container"><div class="timer-text">0%</div><div class="progress-bar"></div></div>' +
+                '<div class="status-msg"></div></div></div>';
+        }).join('');
+        grid.querySelectorAll('.btn-details').forEach(function (btn) {
+            btn.addEventListener('click', function () { toggleDetails(btn); });
+        });
+        grid.querySelectorAll('.btn-download').forEach(function (btn) {
+            btn.addEventListener('click', function () { showStorageChoice(btn); });
+        });
+        grid.querySelectorAll('.btn-storage.internal').forEach(function (btn) {
+            btn.addEventListener('click', function () { startDownload(btn, 'internal'); });
+        });
+        grid.querySelectorAll('.btn-storage.external').forEach(function (btn) {
+            btn.addEventListener('click', function () { startDownload(btn, 'external'); });
+        });
+        grid.querySelectorAll('.box').forEach(function (box) {
+            box.addEventListener('focus', function () {
+                if (navMode !== 'grid') return;
+                getAllBoxes().forEach(function (b) {
+                    if (b !== box) { b.classList.remove('box-focused', 'box-inside'); b.tabIndex = -1; }
+                });
+                box.classList.add('box-focused');
+                box.tabIndex = 0;
+                activeBox = box;
+            });
+        });
     }
 
     window.resetBox = function (box) {
         box.classList.remove('storage-visible', 'details-open', 'box-downloading', 'done', 'error');
         var bar = box.querySelector('.progress-container');
+        if (bar) bar.style.display = 'none';
         var timer = box.querySelector('.timer-text');
         var fill = box.querySelector('.progress-bar');
         var status = box.querySelector('.status-msg');
         var det = box.querySelector('.btn-details');
         var dl = box.querySelector('.btn-download');
-        if (bar) bar.style.display = 'none';
         if (timer) timer.textContent = '0%';
         if (fill) fill.style.width = '0%';
         if (status) status.textContent = '';
-        if (det) det.textContent = 'عرض تفصيل';
-        if (dl) dl.textContent = 'تحميل ملف';
+        if (det) det.textContent = TXT.details;
+        if (dl) dl.textContent = TXT.download;
     };
 
     window.toggleDetails = function (btn) {
         var box = getBox(btn);
-        var dlBtn = box.querySelector('.btn-download');
         if (box.classList.contains('details-open')) {
             box.classList.remove('details-open');
-            btn.textContent = 'عرض تفصيل';
-            if (!box.classList.contains('storage-visible') && dlBtn) {
-                dlBtn.textContent = 'تحميل ملف';
-            }
+            btn.textContent = TXT.details;
         } else {
             if (box.classList.contains('storage-visible')) {
                 box.classList.remove('storage-visible');
-                if (dlBtn) dlBtn.textContent = 'تحميل ملف';
+                var dl = box.querySelector('.btn-download');
+                if (dl) dl.textContent = TXT.download;
             }
             box.classList.add('details-open');
-            btn.textContent = 'غلق تفصيل';
+            btn.textContent = TXT.closeDetails;
         }
         if (navMode === 'inside' && activeBox === box) {
-            getVisibleButtons(box).forEach(function (b) { b.tabIndex = 0; });
-            btn.focus();
+            insideBtnIdx = Math.max(0, getVisibleButtons(box).indexOf(btn));
+            highlightInsideButton();
         }
     };
 
@@ -764,70 +778,54 @@
         var detBtn = box.querySelector('.btn-details');
         if (box.classList.contains('storage-visible')) {
             box.classList.remove('storage-visible', 'box-downloading', 'done', 'error');
-            btn.textContent = 'تحميل ملف';
-            if (detBtn) {
-                detBtn.textContent = box.classList.contains('details-open') ? 'غلق تفصيل' : 'عرض تفصيل';
-            }
+            btn.textContent = TXT.download;
+            if (detBtn) detBtn.textContent = box.classList.contains('details-open') ? TXT.closeDetails : TXT.details;
             if (navMode === 'inside' && activeBox === box) {
-                getVisibleButtons(box).forEach(function (b) { b.tabIndex = 0; });
-                btn.focus();
+                insideBtnIdx = Math.max(0, getVisibleButtons(box).indexOf(btn));
+                highlightInsideButton();
             }
             return;
         }
         if (box.classList.contains('details-open')) {
             box.classList.remove('details-open');
-            if (detBtn) detBtn.textContent = 'عرض تفصيل';
+            if (detBtn) detBtn.textContent = TXT.details;
         }
         box.classList.add('storage-visible');
         box.classList.remove('done', 'error');
-        btn.textContent = 'الغاء تحميل';
+        btn.textContent = TXT.cancelDl;
         if (navMode === 'inside' && activeBox === box) {
-            getVisibleButtons(box).forEach(function (b) { b.tabIndex = 0; });
-            btn.focus();
+            insideBtnIdx = Math.max(0, getVisibleButtons(box).indexOf(btn));
+            highlightInsideButton();
         }
     };
 
-    var DRIVE_URL = 'https://drive.usercontent.google.com/u/0/uc?id=1KMvRjVoMflh2AhVqIhhh7leFL5F3diaJ&export=download';
-
-    window.startDownload = function (boxIdOrBtn, urlOrStorage, storage) {
-        var box, url, boxId, storageType;
-
+    window.startDownload = function (boxIdOrBtn, storage) {
+        var box, url, boxId;
         if (typeof boxIdOrBtn === 'string') {
             boxId = boxIdOrBtn;
-            url = urlOrStorage;
-            storageType = storage;
             box = document.getElementById(boxId);
+            url = box ? box.getAttribute('data-url') : '';
         } else {
             box = getBox(boxIdOrBtn);
-            url = box.getAttribute('data-url');
             boxId = box.id;
-            storageType = urlOrStorage;
+            url = box.getAttribute('data-url');
         }
-
         if (!box || !url || !boxId) return;
-
         if (typeof AndroidInterface === 'undefined') {
-            alert('افتح المتجر من داخل تطبيق المحاكي.');
+            alert(TXT.noApp);
             return;
         }
-
-        var path = storageType === 'internal'
-            ? AndroidInterface.getInternalPath()
-            : AndroidInterface.getExternalPath();
-
+        var path = storage === 'internal' ? AndroidInterface.getInternalPath() : AndroidInterface.getExternalPath();
         if (!path) {
-            alert(storageType === 'external'
-                ? 'لم يتم العثور على USB/SD. وصّل الذاكرة الخارجية أو اختر التخزين الداخلي.'
-                : 'مسار التخزين الداخلي غير متاح.');
+            alert(storage === 'external' ? TXT.noUsb : TXT.noInternal);
             return;
         }
-
         box.classList.add('box-downloading');
-        box.classList.remove('done', 'error');
+        box.classList.remove('storage-visible', 'done', 'error');
         var bar = box.querySelector('.progress-container');
         var status = box.querySelector('.status-msg');
         if (bar) bar.style.display = 'block';
-        if (status) status.textContent = 'جاري التحميل... سيتم فك الملف في: ' + path;
+        if (status) status.textContent = TXT.downloading;
         updateDownloadProgress(boxId, 1);
         AndroidInterface.downloadAndUnzip(url, path, boxId);
     };
@@ -845,54 +843,20 @@
     window.onUnzipComplete = function (boxId, success) {
         var box = document.getElementById(boxId);
         if (!box) return;
-
         box.classList.remove('box-downloading');
-
         var status = box.querySelector('.status-msg');
-
+        var det = box.querySelector('.btn-details');
+        var dl = box.querySelector('.btn-download');
         if (success) {
             box.classList.add('done');
-            if (status) {
-                status.textContent = 'تم التحميل وفك الضغط بنجاح! أعد فحص المكتبة (RESCAN) داخل المحاكي لعرض ألعابك الجديدة.';
-            }
+            if (status) status.textContent = TXT.done;
+            if (det) det.textContent = TXT.details;
+            if (dl) dl.textContent = TXT.download;
         } else {
             box.classList.add('error');
-            if (status) {
-                status.textContent = 'فشل التحميل أو فك الضغط! تأكد من جودة اتصال الإنترنت أو توفر مساحة كافية (أكثر من 4 جيجا).';
-            }
+            if (status) status.textContent = TXT.fail;
         }
     };
-
-    var navMode = 'grid';
-    var activeBox = null;
-
-    function isTvLayout() {
-        return window.matchMedia('(min-width: 901px)').matches;
-    }
-
-    function getBoxNav() {
-        if (isTvLayout()) {
-            return {
-                'box-android-saga':    { up: null, down: null, left: 'box-android-natando', right: null },
-                'box-android-natando': { up: null, down: null, left: 'box-tv-saga', right: 'box-android-saga' },
-                'box-tv-saga':         { up: null, down: null, left: 'box-tv-natando', right: 'box-android-natando' },
-                'box-tv-natando':      { up: null, down: null, left: null, right: 'box-tv-saga' }
-            };
-        }
-        return {
-            'box-android-saga':    { up: null, down: 'box-android-natando', left: 'box-android-natando', right: null },
-            'box-android-natando': { up: 'box-android-saga', down: 'box-tv-saga', left: null, right: 'box-android-saga' },
-            'box-tv-saga':         { up: 'box-android-natando', down: 'box-tv-natando', left: 'box-tv-natando', right: null },
-            'box-tv-natando':      { up: 'box-tv-saga', down: null, left: null, right: 'box-tv-saga' }
-        };
-    }
-
-    function getVisibleButtons(box) {
-        return Array.prototype.filter.call(
-            box.querySelectorAll('.btn-group .btn'),
-            function (btn) { return btn.offsetParent !== null && btn.style.display !== 'none'; }
-        );
-    }
 
     function focusBox(boxId) {
         var prev = document.querySelector('.box.box-focused');
@@ -903,111 +867,178 @@
         }
         var box = document.getElementById(boxId);
         if (!box) return;
-        document.querySelectorAll('.box').forEach(function (b) {
-            b.tabIndex = b.id === boxId ? 0 : -1;
-        });
+        getAllBoxes().forEach(function (b) { b.tabIndex = b.id === boxId ? 0 : -1; });
         box.classList.add('box-focused');
         box.focus({ preventScroll: true });
         activeBox = box;
     }
 
+    function highlightInsideButton() {
+        if (!activeBox) return;
+        var btns = getVisibleButtons(activeBox);
+        if (!btns.length) return;
+        if (insideBtnIdx >= btns.length) insideBtnIdx = btns.length - 1;
+        if (insideBtnIdx < 0) insideBtnIdx = 0;
+        activeBox.querySelectorAll('.btn').forEach(function (b) {
+            b.classList.remove('btn-nav-focus');
+            b.tabIndex = -1;
+        });
+        btns.forEach(function (b, i) {
+            b.classList.toggle('btn-nav-focus', i === insideBtnIdx);
+        });
+        activeBox.focus({ preventScroll: true });
+    }
+
     function enterBox(box) {
         navMode = 'inside';
         activeBox = box;
+        box.tabIndex = 0;
         box.classList.add('box-inside');
-        getVisibleButtons(box).forEach(function (btn) { btn.tabIndex = 0; });
-        var btns = getVisibleButtons(box);
-        if (btns.length) btns[0].focus();
+        insideBtnIdx = 0;
+        highlightInsideButton();
+        trapBackState();
     }
 
     function exitBox() {
         if (!activeBox) return;
-        activeBox.querySelectorAll('.btn').forEach(function (btn) { btn.tabIndex = -1; });
+        activeBox.querySelectorAll('.btn').forEach(function (btn) {
+            btn.tabIndex = -1;
+            btn.classList.remove('btn-nav-focus');
+        });
         activeBox.classList.remove('box-inside');
         navMode = 'grid';
         focusBox(activeBox.id);
     }
 
-    function moveGrid(dir) {
+    function trapBackState() {
+        try { history.pushState({ drInside: 1 }, ''); } catch (err) {}
+    }
+
+    function moveGridSpatial(dir) {
         if (!activeBox) return;
-        var boxNav = getBoxNav();
-        var nextId = boxNav[activeBox.id] && boxNav[activeBox.id][dir];
-        if (nextId) focusBox(nextId);
+        var cur = activeBox.getBoundingClientRect();
+        var curCx = (cur.left + cur.right) / 2;
+        var curCy = (cur.top + cur.bottom) / 2;
+        var best = null, bestScore = Infinity;
+        getAllBoxes().forEach(function (b) {
+            if (b === activeBox) return;
+            var r = b.getBoundingClientRect();
+            var cx = (r.left + r.right) / 2;
+            var cy = (r.top + r.bottom) / 2;
+            var dx = cx - curCx, dy = cy - curCy;
+            if (dir === 'left' && dx > -15) return;
+            if (dir === 'right' && dx < 15) return;
+            if (dir === 'up' && dy > -15) return;
+            if (dir === 'down' && dy < 15) return;
+            var score = (dir === 'left' || dir === 'right') ? Math.abs(dy) * 4 + Math.abs(dx) : Math.abs(dx) * 4 + Math.abs(dy);
+            if (score < bestScore) { bestScore = score; best = b; }
+        });
+        if (best) focusBox(best.id);
     }
 
     function moveInside(dir) {
-        if (!activeBox) return;
         var btns = getVisibleButtons(activeBox);
         if (!btns.length) return;
-        var idx = btns.indexOf(document.activeElement);
-        if (idx < 0) { btns[0].focus(); return; }
-        if (dir === 'down' && idx < btns.length - 1) btns[idx + 1].focus();
-        if (dir === 'up' && idx > 0) btns[idx - 1].focus();
+        if (dir === 'down' && insideBtnIdx < btns.length - 1) insideBtnIdx++;
+        if (dir === 'up' && insideBtnIdx > 0) insideBtnIdx--;
+        if (dir === 'right' && insideBtnIdx < btns.length - 1) insideBtnIdx++;
+        if (dir === 'left' && insideBtnIdx > 0) insideBtnIdx--;
+        highlightInsideButton();
     }
 
-    function isBackKey(code) {
-        return code === 27 || code === 4 || code === 461 || code === 10009 || code === 8;
+    function activateInsideButton() {
+        var btns = getVisibleButtons(activeBox);
+        var btn = btns[insideBtnIdx];
+        if (!btn) return;
+        if (btn.classList.contains('btn-details')) toggleDetails(btn);
+        else if (btn.classList.contains('btn-download')) showStorageChoice(btn);
+        else if (btn.classList.contains('internal')) startDownload(btn, 'internal');
+        else if (btn.classList.contains('external')) startDownload(btn, 'external');
+    }
+
+    function isBackKey(code, key) {
+        return code === 27 || code === 4 || code === 461 || code === 10009 || key === 'Escape' || key === 'Backspace' || key === 'GoBack';
     }
 
     function isOkKey(code, key) {
-        return code === 13 || code === 23 || key === 'Enter' || key === ' ';
+        return code === 13 || code === 23 || code === 66 || code === 160 || code === 79 || key === 'Enter' || key === ' ' || key === 'Select';
     }
 
-    document.addEventListener('keydown', function (e) {
-        var code = e.keyCode || e.which;
-        var key = e.key;
+    function consumeOk(e) {
+        var now = Date.now();
+        if (now - okLock < 280) return true;
+        okLock = now;
+        return false;
+    }
 
-        if (navMode === 'grid') {
-            if (key === 'ArrowUp' || key === 'ArrowDown' || key === 'ArrowLeft' || key === 'ArrowRight' ||
-                code === 37 || code === 38 || code === 39 || code === 40) {
-                e.preventDefault();
-                e.stopPropagation();
-            }
-            if (key === 'ArrowUp' || code === 38) { moveGrid('up'); return; }
-            if (key === 'ArrowDown' || code === 40) { moveGrid('down'); return; }
-            if (key === 'ArrowLeft' || code === 37) { moveGrid('left'); return; }
-            if (key === 'ArrowRight' || code === 39) { moveGrid('right'); return; }
-            if (isOkKey(code, key) && activeBox && document.activeElement === activeBox) {
-                e.preventDefault();
-                enterBox(activeBox);
-            }
+    function handleOk(e) {
+        if (!isOkKey(e.keyCode || e.which, e.key)) return;
+        if (consumeOk(e)) {
+            e.preventDefault();
+            e.stopPropagation();
             return;
         }
-
+        if (navMode === 'grid' && activeBox) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            enterBox(activeBox);
+            return;
+        }
         if (navMode === 'inside') {
-            if (isBackKey(code)) {
-                e.preventDefault();
-                exitBox();
-                return;
-            }
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            activateInsideButton();
+        }
+    }
+
+    function handleKey(e) {
+        var code = e.keyCode || e.which;
+        var key = e.key;
+        if (navMode === 'inside' && isBackKey(code, key)) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            exitBox();
+            return;
+        }
+        if (isOkKey(code, key)) {
+            handleOk(e);
+            return;
+        }
+        if (navMode === 'grid') {
+            if (code >= 37 && code <= 40) { e.preventDefault(); e.stopPropagation(); }
+            if (key === 'ArrowUp' || code === 38) { moveGridSpatial('up'); return; }
+            if (key === 'ArrowDown' || code === 40) { moveGridSpatial('down'); return; }
+            if (key === 'ArrowLeft' || code === 37) { moveGridSpatial('left'); return; }
+            if (key === 'ArrowRight' || code === 39) { moveGridSpatial('right'); return; }
+            return;
+        }
+        if (navMode === 'inside') {
             if (key === 'ArrowUp' || code === 38) { e.preventDefault(); moveInside('up'); return; }
             if (key === 'ArrowDown' || code === 40) { e.preventDefault(); moveInside('down'); return; }
-            if (isOkKey(code, key) && document.activeElement && document.activeElement.classList.contains('btn')) {
-                document.activeElement.click();
-            }
+            if (key === 'ArrowLeft' || code === 37) { e.preventDefault(); moveInside('left'); return; }
+            if (key === 'ArrowRight' || code === 39) { e.preventDefault(); moveInside('right'); return; }
         }
-    });
+    }
 
-    document.querySelectorAll('.box').forEach(function (box) {
-        box.addEventListener('focus', function () {
-            if (navMode === 'grid') {
-                document.querySelectorAll('.box').forEach(function (b) {
-                    if (b !== box) {
-                        b.classList.remove('box-focused', 'box-inside');
-                        b.tabIndex = -1;
-                    }
-                });
-                box.classList.add('box-focused');
-                box.tabIndex = 0;
-                activeBox = box;
-            }
-        });
+    document.addEventListener('keydown', handleKey, true);
+    document.addEventListener('keyup', function (e) {
+        if (isOkKey(e.keyCode || e.which, e.key)) handleOk(e);
+    }, true);
+
+    window.addEventListener('popstate', function () {
+        if (navMode === 'inside') {
+            exitBox();
+            trapBackState();
+        }
     });
 
     window.addEventListener('load', function () {
-        document.querySelectorAll('.box .btn').forEach(function (btn) { btn.tabIndex = -1; });
-        document.querySelectorAll('.box').forEach(function (b, i) { b.tabIndex = i === 0 ? 0 : -1; });
-        focusBox('box-android-saga');
+        buildGrid();
+        trapBackState();
+        if (EMULATORS.length) focusBox(EMULATORS[0].id);
     });
 })();
 </script>
