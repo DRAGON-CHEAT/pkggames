@@ -37,7 +37,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: max(32px, env(safe-area-inset-top, 32px)) 24px 10px;
+            padding: 10px 24px 8px;
             background:
                 linear-gradient(180deg,
                     rgba(0, 110, 130, 0.55) 0%,
@@ -152,9 +152,11 @@
         }
 
         :root {
-            --android-green: #3DDC84;
-            --android-green-dark: #2EB872;
-            --android-green-deep: #00A956;
+            --focus-green: #3DDC84;
+            --focus-green-glow: rgba(61, 220, 132, 0.5);
+            --btn-cyan: #4DB8D9;
+            --btn-cyan-dark: #2E9BB8;
+            --btn-cyan-deep: #1A7A96;
             --card-cols: 2;
             --card-gap: 14px;
             --box-pad-y: 12px;
@@ -213,20 +215,19 @@
         }
 
         .box:focus,
-        .box:focus-within,
         .box.box-focused {
-            border-color: var(--android-green);
+            border-color: var(--focus-green);
             transform: scale(1.03);
             outline: none;
-            box-shadow: 0 0 18px rgba(61, 220, 132, 0.45);
+            box-shadow: 0 0 18px var(--focus-green-glow);
         }
 
         .box.box-inside {
-            border-color: var(--android-green);
+            border-color: var(--focus-green);
             transform: scale(1.04);
             box-shadow:
                 0 0 0 3px rgba(61, 220, 132, 0.55),
-                0 0 24px rgba(61, 220, 132, 0.5);
+                0 0 24px var(--focus-green-glow);
         }
 
         .box.box-inside .title-wrapper {
@@ -234,7 +235,7 @@
         }
 
         .box.box-inside .title-wrapper h2 {
-            color: var(--android-green);
+            color: var(--focus-green);
             background: linear-gradient(90deg,
                 transparent 0%,
                 rgba(0, 80, 40, 0.42) 2%,
@@ -277,8 +278,8 @@
         }
 
         .btn {
-            background: var(--android-green);
-            color: #0a1a12;
+            background: var(--btn-cyan);
+            color: #fff;
             border: none;
             padding: var(--btn-pad-y) 8px;
             border-radius: 12px;
@@ -297,22 +298,26 @@
         }
 
         .btn:focus {
-            background: var(--android-green-dark);
-            outline: 2px solid var(--android-green);
-            box-shadow: 0 0 12px rgba(61, 220, 132, 0.55);
+            background: var(--btn-cyan-dark);
+            outline: 2px solid #7df4ff;
+            box-shadow: 0 0 12px rgba(77, 184, 217, 0.55);
         }
 
         .btn-clean:focus { background: #555b65; }
 
         .btn-storage {
             display: none;
-            background: var(--android-green-deep);
+            background: var(--btn-cyan-deep);
             color: #fff;
             width: calc(50% - 3px);
             margin-bottom: 8px;
         }
 
-        .btn-storage.external { background: #1B8A4E; }
+        .btn-storage.external { background: #1565C0; }
+
+        .box.details-open:not(.storage-visible) .btn-download { display: none; }
+
+        .box.storage-visible .btn-details { display: none; }
 
         .box.storage-visible .btn-storage { display: inline-block; }
 
@@ -401,7 +406,7 @@
         .progress-bar {
             width: 0%;
             height: 100%;
-            background: linear-gradient(90deg, var(--android-green-deep), var(--android-green));
+            background: linear-gradient(90deg, var(--btn-cyan-deep), var(--btn-cyan));
             transition: width 0.2s ease;
         }
 
@@ -465,8 +470,8 @@
             }
             .box.tv-inside,
             .box.box-inside {
-                border-color: var(--android-green);
-                box-shadow: 0 0 18px rgba(61, 220, 132, 0.45);
+                border-color: var(--focus-green);
+                box-shadow: 0 0 18px var(--focus-green-glow);
             }
         }
 
@@ -504,6 +509,10 @@
         }
 
         @media (max-width: 900px) {
+            .top-bar {
+                padding: max(32px, env(safe-area-inset-top, 32px)) 24px 10px;
+            }
+
             .columns {
                 flex-direction: column;
                 align-items: center;
@@ -717,23 +726,64 @@
         var timer = box.querySelector('.timer-text');
         var fill = box.querySelector('.progress-bar');
         var status = box.querySelector('.status-msg');
+        var det = box.querySelector('.btn-details');
+        var dl = box.querySelector('.btn-download');
         if (bar) bar.style.display = 'none';
         if (timer) timer.textContent = '0%';
         if (fill) fill.style.width = '0%';
         if (status) status.textContent = '';
+        if (det) det.textContent = 'عرض تفصيل';
+        if (dl) dl.textContent = 'تحميل ملف';
     };
 
     window.toggleDetails = function (btn) {
         var box = getBox(btn);
-        box.classList.toggle('details-open');
+        var dlBtn = box.querySelector('.btn-download');
+        if (box.classList.contains('details-open')) {
+            box.classList.remove('details-open');
+            btn.textContent = 'عرض تفصيل';
+            if (!box.classList.contains('storage-visible') && dlBtn) {
+                dlBtn.textContent = 'تحميل ملف';
+            }
+        } else {
+            if (box.classList.contains('storage-visible')) {
+                box.classList.remove('storage-visible');
+                if (dlBtn) dlBtn.textContent = 'تحميل ملف';
+            }
+            box.classList.add('details-open');
+            btn.textContent = 'غلق تفصيل';
+        }
+        if (navMode === 'inside' && activeBox === box) {
+            getVisibleButtons(box).forEach(function (b) { b.tabIndex = 0; });
+            btn.focus();
+        }
     };
 
     window.showStorageChoice = function (btn) {
         var box = getBox(btn);
+        var detBtn = box.querySelector('.btn-details');
+        if (box.classList.contains('storage-visible')) {
+            box.classList.remove('storage-visible', 'box-downloading', 'done', 'error');
+            btn.textContent = 'تحميل ملف';
+            if (detBtn) {
+                detBtn.textContent = box.classList.contains('details-open') ? 'غلق تفصيل' : 'عرض تفصيل';
+            }
+            if (navMode === 'inside' && activeBox === box) {
+                getVisibleButtons(box).forEach(function (b) { b.tabIndex = 0; });
+                btn.focus();
+            }
+            return;
+        }
+        if (box.classList.contains('details-open')) {
+            box.classList.remove('details-open');
+            if (detBtn) detBtn.textContent = 'عرض تفصيل';
+        }
         box.classList.add('storage-visible');
         box.classList.remove('done', 'error');
+        btn.textContent = 'الغاء تحميل';
         if (navMode === 'inside' && activeBox === box) {
             getVisibleButtons(box).forEach(function (b) { b.tabIndex = 0; });
+            btn.focus();
         }
     };
 
@@ -816,12 +866,26 @@
     var navMode = 'grid';
     var activeBox = null;
 
-    var boxNav = {
-        'box-android-saga':    { up: null, down: 'box-android-natando', left: 'box-tv-saga', right: null },
-        'box-android-natando': { up: 'box-android-saga', down: null, left: 'box-tv-natando', right: null },
-        'box-tv-saga':         { up: null, down: 'box-tv-natando', left: null, right: 'box-android-saga' },
-        'box-tv-natando':      { up: 'box-tv-saga', down: null, left: null, right: 'box-android-natando' }
-    };
+    function isTvLayout() {
+        return window.matchMedia('(min-width: 901px)').matches;
+    }
+
+    function getBoxNav() {
+        if (isTvLayout()) {
+            return {
+                'box-android-saga':    { up: null, down: null, left: 'box-android-natando', right: null },
+                'box-android-natando': { up: null, down: null, left: 'box-tv-saga', right: 'box-android-saga' },
+                'box-tv-saga':         { up: null, down: null, left: 'box-tv-natando', right: 'box-android-natando' },
+                'box-tv-natando':      { up: null, down: null, left: null, right: 'box-tv-saga' }
+            };
+        }
+        return {
+            'box-android-saga':    { up: null, down: 'box-android-natando', left: 'box-android-natando', right: null },
+            'box-android-natando': { up: 'box-android-saga', down: 'box-tv-saga', left: null, right: 'box-android-saga' },
+            'box-tv-saga':         { up: 'box-android-natando', down: 'box-tv-natando', left: 'box-tv-natando', right: null },
+            'box-tv-natando':      { up: 'box-tv-saga', down: null, left: null, right: 'box-tv-saga' }
+        };
+    }
 
     function getVisibleButtons(box) {
         return Array.prototype.filter.call(
@@ -835,18 +899,22 @@
         if (prev && prev.id !== boxId) {
             resetBox(prev);
             prev.classList.remove('box-focused', 'box-inside');
+            prev.tabIndex = -1;
         }
         var box = document.getElementById(boxId);
         if (!box) return;
+        document.querySelectorAll('.box').forEach(function (b) {
+            b.tabIndex = b.id === boxId ? 0 : -1;
+        });
         box.classList.add('box-focused');
-        box.focus();
+        box.focus({ preventScroll: true });
         activeBox = box;
     }
 
     function enterBox(box) {
         navMode = 'inside';
         activeBox = box;
-        box.classList.add('box-inside', 'details-open');
+        box.classList.add('box-inside');
         getVisibleButtons(box).forEach(function (btn) { btn.tabIndex = 0; });
         var btns = getVisibleButtons(box);
         if (btns.length) btns[0].focus();
@@ -857,11 +925,12 @@
         activeBox.querySelectorAll('.btn').forEach(function (btn) { btn.tabIndex = -1; });
         activeBox.classList.remove('box-inside');
         navMode = 'grid';
-        activeBox.focus();
+        focusBox(activeBox.id);
     }
 
     function moveGrid(dir) {
         if (!activeBox) return;
+        var boxNav = getBoxNav();
         var nextId = boxNav[activeBox.id] && boxNav[activeBox.id][dir];
         if (nextId) focusBox(nextId);
     }
@@ -889,10 +958,15 @@
         var key = e.key;
 
         if (navMode === 'grid') {
-            if (key === 'ArrowUp' || code === 38) { e.preventDefault(); moveGrid('up'); return; }
-            if (key === 'ArrowDown' || code === 40) { e.preventDefault(); moveGrid('down'); return; }
-            if (key === 'ArrowLeft' || code === 37) { e.preventDefault(); moveGrid('left'); return; }
-            if (key === 'ArrowRight' || code === 39) { e.preventDefault(); moveGrid('right'); return; }
+            if (key === 'ArrowUp' || key === 'ArrowDown' || key === 'ArrowLeft' || key === 'ArrowRight' ||
+                code === 37 || code === 38 || code === 39 || code === 40) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            if (key === 'ArrowUp' || code === 38) { moveGrid('up'); return; }
+            if (key === 'ArrowDown' || code === 40) { moveGrid('down'); return; }
+            if (key === 'ArrowLeft' || code === 37) { moveGrid('left'); return; }
+            if (key === 'ArrowRight' || code === 39) { moveGrid('right'); return; }
             if (isOkKey(code, key) && activeBox && document.activeElement === activeBox) {
                 e.preventDefault();
                 enterBox(activeBox);
@@ -920,9 +994,11 @@
                 document.querySelectorAll('.box').forEach(function (b) {
                     if (b !== box) {
                         b.classList.remove('box-focused', 'box-inside');
+                        b.tabIndex = -1;
                     }
                 });
                 box.classList.add('box-focused');
+                box.tabIndex = 0;
                 activeBox = box;
             }
         });
@@ -930,6 +1006,7 @@
 
     window.addEventListener('load', function () {
         document.querySelectorAll('.box .btn').forEach(function (btn) { btn.tabIndex = -1; });
+        document.querySelectorAll('.box').forEach(function (b, i) { b.tabIndex = i === 0 ? 0 : -1; });
         focusBox('box-android-saga');
     });
 })();
