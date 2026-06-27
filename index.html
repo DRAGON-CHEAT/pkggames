@@ -238,8 +238,8 @@
         }
 
         .title-wrapper {
-            margin-bottom: 14px;
-            padding-bottom: 10px;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
             border-bottom: 1px solid rgba(0, 180, 255, 0.25);
         }
 
@@ -326,22 +326,38 @@
         .box.box-downloading .progress-container,
         .box.done .progress-container {
             display: block !important;
-            margin-top: 4px;
+            margin-top: 0;
         }
 
-        .box.done .status-msg {
+        .box.box-downloading .box-progress-wrap,
+        .box.done .box-progress-wrap,
+        .box.error .box-progress-wrap {
             display: block;
-            margin-top: 6px;
-            color: var(--focus-green);
-            font-weight: 700;
+        }
+
+        .box-progress-wrap {
+            display: none;
+            padding: 0 4px;
+            margin-top: 4px;
         }
 
         .box.box-compact .btn-group {
             min-height: 0;
         }
 
-        .box.box-compact .progress-container {
-            margin: 6px auto 0;
+        .box.box-compact .box-progress-wrap {
+            margin-top: 0;
+        }
+
+        .box.done .status-msg {
+            display: block;
+            margin-top: 10px;
+            padding: 6px 4px 2px;
+            font-size: calc(var(--btn-size) + 5px);
+            line-height: 1.45;
+            color: var(--focus-green);
+            font-weight: 700;
+            text-align: center;
         }
 
         .details-panel {
@@ -359,15 +375,21 @@
 
         .status-msg {
             display: none;
-            margin-top: 8px;
+            margin-top: 0;
             font-size: 11px;
             color: #7df4ff;
         }
 
-        .box.done .status-msg,
-        .box.error .status-msg { display: block; }
-
-        .box.error .status-msg { color: #ff6b6b; }
+        .box.error .status-msg {
+            display: block;
+            margin-top: 10px;
+            padding: 6px 4px 2px;
+            font-size: calc(var(--btn-size) + 2px);
+            line-height: 1.45;
+            color: #ff6b6b;
+            font-weight: 700;
+            text-align: center;
+        }
 
         .btn-install.is-ready {
             background: #1a3d1a;
@@ -416,9 +438,9 @@
         .progress-container {
             width: 100%;
             background: #333;
-            height: 18px;
+            height: 16px;
             border-radius: 10px;
-            margin: 12px auto 0;
+            margin: 0 auto;
             display: none;
             overflow: hidden;
             position: relative;
@@ -459,6 +481,15 @@
             body {
                 height: 100vh;
             }
+            :root {
+                --card-cols: 4;
+                --card-gap: 10px;
+                --box-pad-y: 8px;
+                --box-pad-x: 8px;
+                --card-title-size: 13px;
+                --btn-size: 11px;
+                --btn-pad-y: 7px;
+            }
             .cards-grid {
                 display: grid;
                 grid-template-columns: repeat(var(--card-cols), minmax(0, 1fr));
@@ -475,7 +506,9 @@
                 scroll-snap-align: unset;
             }
             .box:focus,
-            .box:focus-within {
+            .box:focus-within,
+            .box.box-focused,
+            .box.box-inside {
                 transform: none;
             }
             .section-head {
@@ -499,13 +532,13 @@
         /* ØªÙ„ÙØ§Ø² / Ø´Ø§Ø´Ø§Øª Ø¹Ø±ÙŠØ¶Ø© */
         @media (min-width: 1024px) and (min-height: 540px) {
             :root {
-                --card-cols: 4;
-                --card-gap: 16px;
-                --box-pad-y: 14px;
-                --box-pad-x: 12px;
-                --card-title-size: 16px;
-                --btn-size: 13px;
-                --btn-pad-y: 10px;
+                --card-cols: 6;
+                --card-gap: 12px;
+                --box-pad-y: 9px;
+                --box-pad-x: 9px;
+                --card-title-size: 14px;
+                --btn-size: 12px;
+                --btn-pad-y: 8px;
                 --section-title-size: 22px;
                 --section-pad-x: 16px;
             }
@@ -514,15 +547,21 @@
         @media (min-width: 1600px) and (min-height: 720px) {
             :root {
                 --card-cols: 6;
-                --card-gap: 18px;
-                --card-title-size: 17px;
-                --btn-size: 14px;
+                --card-gap: 14px;
+                --card-title-size: 15px;
+                --btn-size: 13px;
                 --section-title-size: 24px;
             }
         }
 
-        /* ØªØ§Ø¨Ù„Øª / Ù…ÙˆØ¨Ø§ÙŠÙ„ Ø£ÙÙ‚ÙŠ */
-        @media (max-width: 1023px) {
+        @media (min-width: 901px) and (max-width: 1023px) {
+            :root {
+                --card-cols: 4;
+            }
+        }
+
+        /* تابلت / موبايل أفقي — لا يطبّق على TV (901+) */
+        @media (max-width: 900px) {
             :root {
                 --card-cols: 2;
                 --card-gap: 12px;
@@ -633,7 +672,7 @@
 
         @media (min-width: 1024px) and (max-width: 1399px) and (min-height: 540px) {
             :root {
-                --card-cols: 4;
+                --card-cols: 5;
             }
         }
     </style>
@@ -703,6 +742,8 @@
                 '<button type="button" class="btn btn-download">تحميل ملف</button>' +
                 '<button type="button" class="btn btn-storage internal">تخزين داخلي</button>' +
                 '<button type="button" class="btn btn-storage external">تخزين خارجي USB/SD</button>' +
+                '</div>' +
+                '<div class="box-progress-wrap">' +
                 '<div class="progress-container"><div class="timer-text">0%</div><div class="progress-bar"></div></div>' +
                 '<div class="status-msg"></div></div>';
             var det = box.querySelector(".btn-details");
@@ -883,6 +924,18 @@
         }
     }
 
+    function scrollBoxIntoView(box) {
+        var scroller = document.querySelector(".main-scroll");
+        if (!scroller || !box) return;
+        var sr = scroller.getBoundingClientRect();
+        var br = box.getBoundingClientRect();
+        if (br.bottom > sr.bottom - 12) {
+            scroller.scrollTop += br.bottom - sr.bottom + 28;
+        } else if (br.top < sr.top + 12) {
+            scroller.scrollTop += br.top - sr.top - 28;
+        }
+    }
+
     function focusBox(boxId) {
         var prev = document.querySelector(".box.box-focused");
         if (prev && prev.id !== boxId) {
@@ -898,6 +951,7 @@
         box.classList.add("box-focused");
         box.focus({ preventScroll: true });
         activeBox = box;
+        scrollBoxIntoView(box);
     }
 
     function enterBox(box) {
@@ -945,6 +999,22 @@
             }
         });
         if (best) focusBox(best.id);
+    }
+
+    function moveInsideHorizontal(key, code) {
+        if (!activeBox || !activeBox.classList.contains("storage-visible")) return false;
+        var btn = document.activeElement;
+        if (!btn || !btn.classList.contains("btn-storage")) return false;
+        var internal = activeBox.querySelector(".btn-storage.internal");
+        var external = activeBox.querySelector(".btn-storage.external");
+        var goLeft = key === "ArrowLeft" || code === 37;
+        var goRight = key === "ArrowRight" || code === 39;
+        if (goLeft && btn === internal && external) external.focus();
+        else if (goRight && btn === external && internal) internal.focus();
+        else if (goRight && btn === internal && external) external.focus();
+        else if (goLeft && btn === external && internal) internal.focus();
+        else return false;
+        return true;
     }
 
     function moveInside(dir) {
@@ -1005,6 +1075,14 @@
             }
             if (key === "ArrowLeft" || code === 37 || key === "ArrowRight" || code === 39) {
                 e.preventDefault();
+                if (activeBox && activeBox.classList.contains("storage-visible")) {
+                    if (moveInsideHorizontal(key, code)) return;
+                    var btn = document.activeElement;
+                    if (btn && btn.classList.contains("btn-download")) {
+                        exitBox();
+                        return;
+                    }
+                }
                 exitBox();
                 return;
             }
