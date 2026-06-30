@@ -681,7 +681,7 @@
 
     <header class="top-header">
         <div class="top-bar">
-            <h1 class="brand">𝑫𝑹𝑨𝑮𝑶𝑵 𝑺𝑯𝑶𝑾 Game Store</h1>
+            <h1 class="brand">𝑻𝑶𝑷 𝑮𝑨𝑴𝑬𝒔𝒕𝒐𝒓𝒆</h1>
         </div>
         <div class="top-glow-down" aria-hidden="true"></div>
     </header>
@@ -741,7 +741,7 @@
                 '<button type="button" class="btn btn-details">عرض تفصيل</button>' +
                 '<button type="button" class="btn btn-download">تحميل ملف</button>' +
                 '<button type="button" class="btn btn-storage internal">تخزين داخلي</button>' +
-                '<button type="button" class="btn btn-storage external">تخزين خارجي USB/SD</button>' +
+                '<button type="button" class="btn btn-storage external">تخزين خارجي</button>' +
                 '</div>' +
                 '<div class="box-progress-wrap">' +
                 '<div class="progress-container"><div class="timer-text">0%</div><div class="progress-bar"></div></div>' +
@@ -899,11 +899,11 @@
         box.classList.add("box-compact", "done");
         var status = box.querySelector(".status-msg");
         if (success) {
-            if (status) status.textContent = "مكتمل أرجع اعمل إعادة المسح √";
+            if (status) status.textContent = "مكتمل قم برجوع اظغط إعادة المسح √";
         } else {
             box.classList.remove("done");
             box.classList.add("error");
-            if (status) status.textContent = "فشل التحميل أو فك الضغط! تحقق من الإنترنت أو المساحة.";
+            if (status) status.textContent = "فشل التحميل! تحقق من الإنترنت أو مساحة تخزين.";
         }
     };
 
