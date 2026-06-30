@@ -1,4 +1,3 @@
-﻿
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -36,8 +35,9 @@
             position: relative;
             display: flex;
             align-items: center;
-            justify-content: center;
-            padding: 10px 24px 8px;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 10px 20px 8px;
             background:
                 linear-gradient(180deg,
                     rgba(0, 110, 130, 0.55) 0%,
@@ -84,10 +84,140 @@
 
         .brand {
             margin: 0;
-            font-size: 22px;
+            font-size: 26px;
             font-weight: 800;
             letter-spacing: 2px;
             color: #fff;
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .top-nav {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+            direction: ltr;
+        }
+
+        .nav-btn {
+            background: #4DB8D9;
+            color: #fff;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .nav-btn:focus {
+            background: #2E9BB8;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(125, 244, 255, 0.85);
+        }
+
+        .nav-btn.nav-focused {
+            box-shadow: 0 0 0 3px rgba(61, 220, 132, 0.85);
+        }
+
+        .games-collection-panel,
+        .games-roms-panel {
+            display: block;
+        }
+
+        .games-roms-panel {
+            display: none;
+        }
+
+        .rom-cats-row {
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: stretch;
+            gap: 4px;
+            margin-bottom: 4px;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .rom-cat-btn {
+            flex: 1 1 0;
+            min-width: 0;
+            background: #4DB8D9;
+            color: #fff;
+            border: 2px solid rgba(255, 255, 255, 0.12);
+            padding: 3px 1px;
+            border-radius: 6px;
+            font-size: 9px;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+            line-height: 1.15;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .rom-cat-btn:focus,
+        .rom-cat-btn.rom-cat-focused {
+            background: #2E9BB8;
+            border-color: var(--focus-green);
+            outline: none;
+            box-shadow: 0 0 14px var(--focus-green-glow);
+        }
+
+        .rom-cat-btn.rom-cat-selected {
+            border-color: var(--focus-green);
+            box-shadow: 0 0 10px var(--focus-green-glow);
+        }
+
+        .rom-games-divider {
+            margin: 4px calc(-1 * (16px + var(--section-pad-x))) 8px;
+            padding: 2px 0;
+            text-align: center;
+            border-top: 1px solid rgba(0, 180, 255, 0.35);
+            border-bottom: 1px solid rgba(0, 180, 255, 0.2);
+        }
+
+        .rom-games-divider-title {
+            display: block;
+            width: 100%;
+            margin: 0;
+            padding: 2px 16px 3px;
+            font-family: "Orbitron", "Arial Black", sans-serif;
+            font-size: calc(var(--section-title-size) - 2px);
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: 1.5px;
+            line-height: 1.1;
+            text-align: center;
+            text-shadow: 0 1px 6px rgba(0, 0, 0, 0.45);
+            background: linear-gradient(90deg,
+                transparent 0%,
+                rgba(0, 55, 120, 0.4) 5%,
+                rgba(0, 123, 255, 0.78) 22%,
+                rgba(0, 123, 255, 0.78) 78%,
+                rgba(0, 55, 120, 0.4) 95%,
+                transparent 100%);
+        }
+
+        .rom-games-grid {
+            display: grid;
+            grid-template-columns: repeat(var(--card-cols), minmax(0, 1fr));
+            gap: var(--card-gap);
+        }
+
+        .games-roms-panel .box {
+            background-image: url("https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=640&q=80");
+        }
+
+        .rom-games-empty {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 28px 12px;
+            color: #9ad4e8;
+            font-size: calc(var(--btn-size) + 2px);
         }
 
         .main-scroll {
@@ -481,6 +611,18 @@
             body {
                 height: 100vh;
             }
+            .brand {
+                font-size: 32px;
+            }
+            .nav-btn {
+                font-size: 14px;
+                padding: 9px 16px;
+                background: #4DB8D9;
+            }
+            .rom-cat-btn {
+                font-size: 10px;
+                padding: 4px 2px;
+            }
             :root {
                 --card-cols: 4;
                 --card-gap: 10px;
@@ -552,6 +694,10 @@
                 --btn-size: 13px;
                 --section-title-size: 24px;
             }
+            .rom-cat-btn {
+                font-size: 11px;
+                padding: 5px 3px;
+            }
         }
 
         @media (min-width: 901px) and (max-width: 1023px) {
@@ -571,7 +717,17 @@
 
         @media (max-width: 900px) {
             .top-bar {
-                padding: max(32px, env(safe-area-inset-top, 32px)) 24px 10px;
+                padding: max(32px, env(safe-area-inset-top, 32px)) 16px 10px;
+            }
+
+            .brand {
+                font-size: 20px;
+            }
+
+            .nav-btn {
+                font-size: 11px;
+                padding: 7px 10px;
+                background: #4DB8D9;
             }
 
             .columns {
@@ -682,6 +838,10 @@
     <header class="top-header">
         <div class="top-bar">
             <h1 class="brand">𝑻𝑶𝑷 𝑮𝑨𝑴𝑬𝑺 𝑺𝑻𝑶𝑹𝑬</h1>
+            <nav class="top-nav" aria-label="Store navigation">
+                <button type="button" class="nav-btn" id="btn-games-collection">Games Collection</button>
+                <button type="button" class="nav-btn" id="btn-game-roms">Game Roms</button>
+            </nav>
         </div>
         <div class="top-glow-down" aria-hidden="true"></div>
     </header>
@@ -689,9 +849,22 @@
     <div class="main-scroll">
         <div class="scroll-body">
         <div class="columns">
+            <div id="games-collection-panel" class="games-collection-panel">
             <section class="section" aria-label="Emulators">
                 <div class="cards-grid" id="cards-grid"></div>
             </section>
+            </div>
+            <div id="games-roms-panel" class="games-roms-panel">
+            <section class="section" aria-label="Game Roms">
+                <div class="rom-cats-row" id="rom-cats-row"></div>
+                <div class="rom-games-divider">
+                    <h2 class="rom-games-divider-title">Games Selection</h2>
+                </div>
+                <div class="rom-games-grid" id="rom-games-grid">
+                    <div class="rom-games-empty" id="rom-games-empty">اختر محاكي من الأعلى لعرض ألعابه</div>
+                </div>
+            </section>
+            </div>
         </div>
 
         <div class="footer">Build by DraGon Show™_2026</div>
@@ -719,6 +892,205 @@
     var navMode = "grid";
     var activeBox = null;
     var allBoxes = [];
+    var storeView = "collection";
+    var focusZone = "grid";
+    var romNavMode = "cats";
+    var activeRomCat = null;
+    var allRomCats = [];
+    var allRomGames = [];
+    var activeRomGame = null;
+    var allTopNav = [];
+    var activeTopNav = null;
+
+    var ROM_GAMES = {
+        "box-sega": ["Sonic The Hedgehog", "Streets of Rage 2", "Golden Axe", "Altered Beast"],
+        "box-atari": ["Pac-Man", "Space Invaders", "Asteroids", "Pitfall!"],
+        "box-nintendo": ["Super Mario Bros", "The Legend of Zelda", "Metroid", "Donkey Kong"],
+        "box-psp": ["God of War", "Crisis Core", "Monster Hunter", "Tekken 6"],
+        "box-n64": ["Super Mario 64", "Zelda Ocarina", "GoldenEye 007", "Mario Kart 64"],
+        "box-gba": ["Pokemon Emerald", "Metroid Fusion", "Fire Emblem", "Castlevania"],
+        "box-ps1": ["Final Fantasy VII", "Crash Bandicoot", "Resident Evil 2", "Tekken 3"],
+        "box-neogeo": ["Metal Slug", "King of Fighters", "Samurai Shodown", "Garou"],
+        "box-mame": ["Street Fighter II", "Contra", "Galaga", "Donkey Kong"],
+        "box-saga": ["Phantasy Star", "Shining Force", "Sonic CD", "Virtua Fighter"],
+        "box-natando": ["Pokemon Red", "Pokemon Gold", "Pokemon Ruby", "Pokemon FireRed"],
+        "box-dreamcast": ["Sonic Adventure", "Shenmue", "Crazy Taxi", "Jet Set Radio"]
+    };
+
+    function getCenter(el) {
+        var r = el.getBoundingClientRect();
+        return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+    }
+
+    function getTopRowItems(items) {
+        if (!items.length) return [];
+        var minY = Infinity;
+        items.forEach(function (el) {
+            var y = getCenter(el).y;
+            if (y < minY) minY = y;
+        });
+        return items.filter(function (el) {
+            return Math.abs(getCenter(el).y - minY) < 36;
+        });
+    }
+
+    function findClosestByX(items, curX, getEl) {
+        var best = null;
+        var bestDist = Infinity;
+        items.forEach(function (item) {
+            var el = getEl(item);
+            if (!el) return;
+            var d = Math.abs(getCenter(el).x - curX);
+            if (d < bestDist) {
+                bestDist = d;
+                best = item;
+            }
+        });
+        return best;
+    }
+
+    function clearHeaderFocus() {
+        allTopNav.forEach(function (btn) {
+            btn.classList.remove("nav-focused");
+            btn.tabIndex = -1;
+        });
+        activeTopNav = null;
+    }
+
+    function focusTopNav(btn) {
+        if (!btn) return;
+        clearHeaderFocus();
+        if (storeView === "collection") {
+            allBoxes.forEach(function (b) {
+                b.classList.remove("box-focused", "box-inside");
+                b.tabIndex = -1;
+            });
+            activeBox = null;
+        } else {
+            allRomCats.forEach(function (b) {
+                b.classList.remove("rom-cat-focused", "rom-cat-selected");
+                b.tabIndex = -1;
+            });
+            allRomGames.forEach(function (b) {
+                b.classList.remove("box-focused");
+                b.tabIndex = -1;
+            });
+            activeRomGame = null;
+        }
+        focusZone = "header";
+        activeTopNav = btn;
+        allTopNav.forEach(function (b) {
+            b.tabIndex = b === btn ? 0 : -1;
+        });
+        btn.classList.add("nav-focused");
+        btn.focus({ preventScroll: true });
+        scrollBoxIntoView(btn);
+    }
+
+    function focusHeaderFromBelow(fromEl) {
+        if (!allTopNav.length) return;
+        var cx = fromEl ? getCenter(fromEl).x : window.innerWidth / 2;
+        var btn = findClosestByX(allTopNav, cx, function (b) { return b; });
+        focusTopNav(btn || allTopNav[0]);
+    }
+
+    function moveTopNavHorizontal(dir) {
+        if (!allTopNav.length) return;
+        var cur = activeTopNav;
+        if (!cur || allTopNav.indexOf(cur) < 0) cur = allTopNav[0];
+        var idx = allTopNav.indexOf(cur);
+        if (dir === "left" && idx > 0) focusTopNav(allTopNav[idx - 1]);
+        else if (dir === "right" && idx < allTopNav.length - 1) focusTopNav(allTopNav[idx + 1]);
+    }
+
+    function focusGridFromHeader() {
+        if (!allBoxes.length) return;
+        var cx = activeTopNav ? getCenter(activeTopNav).x : window.innerWidth / 2;
+        var tops = getTopRowItems(allBoxes);
+        var box = findClosestByX(tops.length ? tops : allBoxes, cx, function (b) { return b; });
+        if (box) {
+            clearHeaderFocus();
+            focusZone = "grid";
+            focusBox(box.id);
+        }
+    }
+
+    function focusRomCatsFromHeader() {
+        if (!allRomCats.length) return;
+        var cx = activeTopNav ? getCenter(activeTopNav).x : window.innerWidth / 2;
+        var cat = findClosestByX(allRomCats, cx, function (b) { return b; });
+        if (!cat) cat = allRomCats[0];
+        clearHeaderFocus();
+        romNavMode = "cats";
+        focusZone = "cats";
+        allRomCats.forEach(function (b) {
+            b.classList.remove("rom-cat-focused");
+            b.tabIndex = b === cat ? 0 : -1;
+        });
+        cat.classList.add("rom-cat-focused");
+        activeRomCat = cat;
+        cat.focus({ preventScroll: true });
+        scrollBoxIntoView(cat);
+    }
+
+    function focusRomGamesFromCats(fromCat) {
+        if (!allRomGames.length) return;
+        var cx = fromCat ? getCenter(fromCat).x : window.innerWidth / 2;
+        var tops = getTopRowItems(allRomGames);
+        var box = findClosestByX(tops.length ? tops : allRomGames, cx, function (b) { return b; });
+        if (!box) return;
+        romNavMode = "games";
+        focusZone = "games";
+        allRomCats.forEach(function (b) {
+            b.classList.remove("rom-cat-focused");
+            b.tabIndex = -1;
+        });
+        allRomGames.forEach(function (b) {
+            b.classList.remove("box-focused");
+            b.tabIndex = b === box ? 0 : -1;
+        });
+        box.classList.add("box-focused");
+        activeRomGame = box;
+        box.focus({ preventScroll: true });
+        scrollBoxIntoView(box);
+    }
+
+    function focusRomCatsFromGames(fromBox) {
+        if (!allRomCats.length) return;
+        var cx = fromBox ? getCenter(fromBox).x : window.innerWidth / 2;
+        var cat = findClosestByX(allRomCats, cx, function (b) { return b; });
+        if (!cat) cat = allRomCats[0];
+        romNavMode = "cats";
+        focusZone = "cats";
+        allRomGames.forEach(function (b) {
+            b.classList.remove("box-focused");
+            b.tabIndex = -1;
+        });
+        activeRomGame = null;
+        allRomCats.forEach(function (b) {
+            b.classList.remove("rom-cat-focused");
+            b.tabIndex = b === cat ? 0 : -1;
+        });
+        cat.classList.add("rom-cat-focused");
+        activeRomCat = cat;
+        cat.focus({ preventScroll: true });
+        scrollBoxIntoView(cat);
+    }
+
+    function initTopNav() {
+        allTopNav = [
+            document.getElementById("btn-games-collection"),
+            document.getElementById("btn-game-roms")
+        ].filter(Boolean);
+        allTopNav.forEach(function (btn) {
+            btn.tabIndex = -1;
+            btn.addEventListener("focus", function () {
+                if (focusZone !== "header") return;
+                activeTopNav = btn;
+                allTopNav.forEach(function (b) { b.classList.toggle("nav-focused", b === btn); });
+            });
+        });
+    }
 
     function getBox(el) {
         return el.closest(".box");
@@ -755,7 +1127,9 @@
             stIn.addEventListener("click", function () { startDownloadFromBtn(stIn, "internal"); });
             stEx.addEventListener("click", function () { startDownloadFromBtn(stEx, "external"); });
             box.addEventListener("focus", function () {
-                if (navMode === "grid") {
+                if (navMode === "grid" && storeView === "collection") {
+                    clearHeaderFocus();
+                    focusZone = "grid";
                     allBoxes.forEach(function (b) {
                         if (b !== box) {
                             b.classList.remove("box-focused", "box-inside");
@@ -769,7 +1143,227 @@
             });
             grid.appendChild(box);
         });
-        allBoxes = Array.prototype.slice.call(document.querySelectorAll(".box"));
+        allBoxes = Array.prototype.slice.call(document.querySelectorAll("#cards-grid .box"));
+    }
+
+    function attachRomGameBoxHandlers(box) {
+        var det = box.querySelector(".btn-details");
+        var dl = box.querySelector(".btn-download");
+        var stIn = box.querySelector(".btn-storage.internal");
+        var stEx = box.querySelector(".btn-storage.external");
+        if (det) det.addEventListener("click", function () { toggleDetails(det); });
+        if (dl) dl.addEventListener("click", function () { showStorageChoice(dl); });
+        if (stIn) stIn.addEventListener("click", function () { startDownloadFromBtn(stIn, "internal"); });
+        if (stEx) stEx.addEventListener("click", function () { startDownloadFromBtn(stEx, "external"); });
+    }
+
+    function buildRomCategories() {
+        var row = document.getElementById("rom-cats-row");
+        if (!row || row.childElementCount) return;
+        EMULATORS.forEach(function (em) {
+            var btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = "rom-cat-btn";
+            btn.id = "rom-cat-" + em.id;
+            btn.setAttribute("data-emulator", em.id);
+            btn.textContent = em.name;
+            btn.tabIndex = -1;
+            btn.addEventListener("click", function () { selectRomCategory(em.id); });
+            btn.addEventListener("focus", function () {
+                if (storeView !== "roms" || romNavMode !== "cats" || focusZone !== "cats") return;
+                clearHeaderFocus();
+                focusZone = "cats";
+                allRomCats.forEach(function (b) { b.classList.remove("rom-cat-focused"); });
+                btn.classList.add("rom-cat-focused");
+                activeRomCat = btn;
+            });
+            row.appendChild(btn);
+        });
+        allRomCats = Array.prototype.slice.call(row.querySelectorAll(".rom-cat-btn"));
+    }
+
+    function clearRomGamesGrid() {
+        var grid = document.getElementById("rom-games-grid");
+        if (!grid) return;
+        grid.innerHTML = '<div class="rom-games-empty" id="rom-games-empty">اختر محاكي من الأعلى لعرض ألعابه</div>';
+        allRomGames = [];
+        activeRomGame = null;
+    }
+
+    function selectRomCategory(emulatorId) {
+        var catBtn = document.getElementById("rom-cat-" + emulatorId);
+        if (catBtn) activeRomCat = catBtn;
+        allRomCats.forEach(function (btn) {
+            var on = btn.getAttribute("data-emulator") === emulatorId;
+            btn.classList.toggle("rom-cat-selected", on);
+            btn.tabIndex = storeView === "roms" && romNavMode === "cats" ? 0 : -1;
+        });
+        var games = ROM_GAMES[emulatorId] || [];
+        var grid = document.getElementById("rom-games-grid");
+        if (!grid) return;
+        grid.innerHTML = "";
+        if (!games.length) {
+            grid.innerHTML = '<div class="rom-games-empty">لا توجد ألعاب لهذا المحاكي حالياً</div>';
+            allRomGames = [];
+            return;
+        }
+        games.forEach(function (gameName, idx) {
+            var box = document.createElement("div");
+            box.className = "box";
+            box.id = emulatorId + "-rom-" + idx;
+            box.tabIndex = -1;
+            box.setAttribute("data-url", DRIVE_URL);
+            box.innerHTML =
+                '<div class="title-wrapper"><h2>' + gameName + '</h2></div>' +
+                '<div class="details-panel">ROM — ' + gameName + '</div>' +
+                '<div class="btn-group">' +
+                '<button type="button" class="btn btn-details">عرض تفصيل</button>' +
+                '<button type="button" class="btn btn-download">تحميل ملف</button>' +
+                '<button type="button" class="btn btn-storage internal">تخزين داخلي</button>' +
+                '<button type="button" class="btn btn-storage external">تخزين خارجي</button>' +
+                '</div>' +
+                '<div class="box-progress-wrap">' +
+                '<div class="progress-container"><div class="timer-text">0%</div><div class="progress-bar"></div></div>' +
+                '<div class="status-msg"></div></div>';
+            attachRomGameBoxHandlers(box);
+            box.addEventListener("focus", function () {
+                if (storeView !== "roms" || romNavMode !== "games" || navMode === "inside") return;
+                clearHeaderFocus();
+                focusZone = "games";
+                allRomGames.forEach(function (b) {
+                    b.classList.remove("box-focused");
+                    b.tabIndex = -1;
+                });
+                box.classList.add("box-focused");
+                box.tabIndex = 0;
+                activeRomGame = box;
+            });
+            grid.appendChild(box);
+        });
+        allRomGames = Array.prototype.slice.call(grid.querySelectorAll(".box"));
+        romNavMode = "games";
+        if (allRomGames.length) {
+            allRomGames[0].tabIndex = 0;
+            allRomGames[0].focus();
+            activeRomGame = allRomGames[0];
+        }
+    }
+
+    function showCollectionView() {
+        storeView = "collection";
+        romNavMode = "cats";
+        var collectionPanel = document.getElementById("games-collection-panel");
+        var romsPanel = document.getElementById("games-roms-panel");
+        if (collectionPanel) collectionPanel.style.display = "block";
+        if (romsPanel) romsPanel.style.display = "none";
+        allRomCats.forEach(function (btn) {
+            btn.classList.remove("rom-cat-focused", "rom-cat-selected");
+            btn.tabIndex = -1;
+        });
+        clearRomGamesGrid();
+        activeRomCat = null;
+        navMode = "grid";
+        focusZone = "grid";
+        if (allBoxes.length) focusBox(allBoxes[0].id);
+    }
+
+    function showRomsView() {
+        storeView = "roms";
+        romNavMode = "cats";
+        focusZone = "cats";
+        var collectionPanel = document.getElementById("games-collection-panel");
+        var romsPanel = document.getElementById("games-roms-panel");
+        if (collectionPanel) collectionPanel.style.display = "none";
+        if (romsPanel) romsPanel.style.display = "block";
+        buildRomCategories();
+        clearRomGamesGrid();
+        allRomCats.forEach(function (btn, i) {
+            btn.classList.remove("rom-cat-selected", "rom-cat-focused");
+            btn.tabIndex = i === 0 ? 0 : -1;
+        });
+        if (allRomCats.length) {
+            allRomCats[0].classList.add("rom-cat-focused");
+            allRomCats[0].focus();
+            activeRomCat = allRomCats[0];
+        }
+        navMode = "grid";
+        activeBox = null;
+    }
+
+    function moveRomCatsSpatial(dir) {
+        if (!allRomCats.length) return;
+        var centers = allRomCats.map(function (btn) {
+            var r = btn.getBoundingClientRect();
+            return { btn: btn, x: r.left + r.width / 2, y: r.top + r.height / 2 };
+        });
+        var cur = null;
+        centers.forEach(function (c) {
+            if (c.btn === activeRomCat || c.btn.classList.contains("rom-cat-focused")) cur = c;
+        });
+        if (!cur) {
+            allRomCats[0].focus();
+            return;
+        }
+        var best = null;
+        var bestDist = Infinity;
+        centers.forEach(function (c) {
+            if (c.btn === cur.btn) return;
+            var ok = false;
+            if (dir === "left" && c.x < cur.x - 8) ok = true;
+            if (dir === "right" && c.x > cur.x + 8) ok = true;
+            if (dir === "up" && c.y < cur.y - 8) ok = true;
+            if (dir === "down" && c.y > cur.y + 8) ok = true;
+            if (!ok) return;
+            var dist = Math.hypot(c.x - cur.x, c.y - cur.y);
+            if (dist < bestDist) {
+                bestDist = dist;
+                best = c;
+            }
+        });
+        if (best) best.btn.focus();
+        else if (dir === "up") focusHeaderFromBelow(cur.btn);
+        else if (dir === "down") focusRomGamesFromCats(cur.btn);
+    }
+
+    function moveRomGamesSpatial(dir) {
+        if (!allRomGames.length) return;
+        var centers = allRomGames.map(function (box) {
+            var r = box.getBoundingClientRect();
+            return { box: box, x: r.left + r.width / 2, y: r.top + r.height / 2 };
+        });
+        var cur = null;
+        centers.forEach(function (c) {
+            if (c.box === activeRomGame || c.box.classList.contains("box-focused")) cur = c;
+        });
+        if (!cur) {
+            allRomGames[0].focus();
+            return;
+        }
+        var best = null;
+        var bestDist = Infinity;
+        centers.forEach(function (c) {
+            if (c.box === cur.box) return;
+            var ok = false;
+            if (dir === "left" && c.x < cur.x - 8) ok = true;
+            if (dir === "right" && c.x > cur.x + 8) ok = true;
+            if (dir === "up" && c.y < cur.y - 8) ok = true;
+            if (dir === "down" && c.y > cur.y + 8) ok = true;
+            if (!ok) return;
+            var dist = Math.hypot(c.x - cur.x, c.y - cur.y);
+            if (dist < bestDist) {
+                bestDist = dist;
+                best = c;
+            }
+        });
+        if (best) best.box.focus();
+        else if (dir === "up") {
+            var tops = getTopRowItems(allRomGames);
+            if (tops.indexOf(cur.box) >= 0) focusRomCatsFromGames(cur.box);
+        }
+    }
+
+    function focusRomCategoryFromGames() {
+        focusRomCatsFromGames(activeRomGame || activeRomCat || allRomCats[0]);
     }
 
     window.resetBox = function (box) {
@@ -937,7 +1531,9 @@
     }
 
     function focusBox(boxId) {
-        var prev = document.querySelector(".box.box-focused");
+        clearHeaderFocus();
+        focusZone = "grid";
+        var prev = document.querySelector("#cards-grid .box.box-focused");
         if (prev && prev.id !== boxId) {
             resetBox(prev);
             prev.classList.remove("box-focused", "box-inside");
@@ -965,10 +1561,25 @@
 
     function exitBox() {
         if (!activeBox) return;
-        activeBox.querySelectorAll(".btn").forEach(function (btn) { btn.tabIndex = -1; });
-        activeBox.classList.remove("box-inside");
+        var box = activeBox;
+        box.querySelectorAll(".btn").forEach(function (btn) { btn.tabIndex = -1; });
+        box.classList.remove("box-inside");
         navMode = "grid";
-        focusBox(activeBox.id);
+        if (storeView === "roms") {
+            romNavMode = "games";
+            activeRomGame = box;
+            allRomGames.forEach(function (b) {
+                b.classList.remove("box-focused");
+                b.tabIndex = -1;
+            });
+            box.classList.add("box-focused");
+            box.tabIndex = 0;
+            box.focus({ preventScroll: true });
+            activeBox = null;
+            scrollBoxIntoView(box);
+            return;
+        }
+        focusBox(box.id);
     }
 
     function moveGridSpatial(dir) {
@@ -999,6 +1610,10 @@
             }
         });
         if (best) focusBox(best.id);
+        else if (dir === "up" && activeBox) {
+            var tops = getTopRowItems(allBoxes);
+            if (tops.indexOf(activeBox) >= 0) focusHeaderFromBelow(activeBox);
+        }
     }
 
     function moveInsideHorizontal(key, code) {
@@ -1050,24 +1665,12 @@
         var code = e.keyCode || e.which;
         var key = e.key;
 
-        if (navMode === "grid") {
+        if (navMode === "inside") {
             if (key === "ArrowUp" || key === "ArrowDown" || key === "ArrowLeft" || key === "ArrowRight" ||
                 code === 37 || code === 38 || code === 39 || code === 40) {
                 e.preventDefault();
                 e.stopPropagation();
             }
-            if (key === "ArrowUp" || code === 38) { moveGridSpatial("up"); return; }
-            if (key === "ArrowDown" || code === 40) { moveGridSpatial("down"); return; }
-            if (key === "ArrowLeft" || code === 37) { moveGridSpatial("left"); return; }
-            if (key === "ArrowRight" || code === 39) { moveGridSpatial("right"); return; }
-            if (isOkKey(code, key) && activeBox && document.activeElement === activeBox) {
-                e.preventDefault();
-                enterBox(activeBox);
-            }
-            return;
-        }
-
-        if (navMode === "inside") {
             if (isBackKey(code, key)) {
                 e.preventDefault();
                 exitBox();
@@ -1092,13 +1695,102 @@
                 e.preventDefault();
                 activateFocusedButton();
             }
+            return;
+        }
+
+        if (focusZone === "header") {
+            if (key === "ArrowUp" || key === "ArrowDown" || key === "ArrowLeft" || key === "ArrowRight" ||
+                code === 37 || code === 38 || code === 39 || code === 40) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            if (key === "ArrowLeft" || code === 37) { moveTopNavHorizontal("left"); return; }
+            if (key === "ArrowRight" || code === 39) { moveTopNavHorizontal("right"); return; }
+            if (key === "ArrowDown" || code === 40) {
+                if (storeView === "collection") focusGridFromHeader();
+                else focusRomCatsFromHeader();
+                return;
+            }
+            if (isOkKey(code, key) && activeTopNav) {
+                e.preventDefault();
+                activeTopNav.click();
+            }
+            return;
+        }
+
+        if (storeView === "roms") {
+            if (key === "ArrowUp" || key === "ArrowDown" || key === "ArrowLeft" || key === "ArrowRight" ||
+                code === 37 || code === 38 || code === 39 || code === 40) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            if (isBackKey(code, key)) {
+                e.preventDefault();
+                if (romNavMode === "games") focusRomCategoryFromGames();
+                else showCollectionView();
+                return;
+            }
+            if (romNavMode === "cats") {
+                if (key === "ArrowUp" || code === 38) { moveRomCatsSpatial("up"); return; }
+                if (key === "ArrowDown" || code === 40) { moveRomCatsSpatial("down"); return; }
+                if (key === "ArrowLeft" || code === 37) { moveRomCatsSpatial("left"); return; }
+                if (key === "ArrowRight" || code === 39) { moveRomCatsSpatial("right"); return; }
+                if (isOkKey(code, key) && activeRomCat) {
+                    e.preventDefault();
+                    var catId = activeRomCat.getAttribute("data-emulator");
+                    if (catId) selectRomCategory(catId);
+                }
+            } else if (romNavMode === "games") {
+                if (key === "ArrowUp" || code === 38) { moveRomGamesSpatial("up"); return; }
+                if (key === "ArrowDown" || code === 40) { moveRomGamesSpatial("down"); return; }
+                if (key === "ArrowLeft" || code === 37) { moveRomGamesSpatial("left"); return; }
+                if (key === "ArrowRight" || code === 39) { moveRomGamesSpatial("right"); return; }
+                if (isOkKey(code, key) && activeRomGame && document.activeElement === activeRomGame) {
+                    e.preventDefault();
+                    enterBox(activeRomGame);
+                }
+            }
+            return;
+        }
+
+        if (navMode === "grid") {
+            if (key === "ArrowUp" || key === "ArrowDown" || key === "ArrowLeft" || key === "ArrowRight" ||
+                code === 37 || code === 38 || code === 39 || code === 40) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            if (key === "ArrowUp" || code === 38) { moveGridSpatial("up"); return; }
+            if (key === "ArrowDown" || code === 40) { moveGridSpatial("down"); return; }
+            if (key === "ArrowLeft" || code === 37) { moveGridSpatial("left"); return; }
+            if (key === "ArrowRight" || code === 39) { moveGridSpatial("right"); return; }
+            if (isOkKey(code, key) && activeBox && document.activeElement === activeBox) {
+                e.preventDefault();
+                enterBox(activeBox);
+            }
+            return;
         }
     }, true);
 
     window.addEventListener("load", function () {
+        initTopNav();
         buildBoxes();
         allBoxes.forEach(function (b) { b.tabIndex = -1; });
         if (allBoxes.length) focusBox(allBoxes[0].id);
+
+        var btnCollection = document.getElementById("btn-games-collection");
+        var btnRoms = document.getElementById("btn-game-roms");
+
+        if (btnCollection) {
+            btnCollection.addEventListener("click", function () {
+                showCollectionView();
+            });
+        }
+
+        if (btnRoms) {
+            btnRoms.addEventListener("click", function () {
+                showRomsView();
+            });
+        }
     });
 })();
 </script>
