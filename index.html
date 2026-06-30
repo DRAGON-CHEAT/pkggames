@@ -168,7 +168,9 @@
         }
 
         .rom-cat-btn.rom-cat-selected {
-            background: #3aa8c8;
+            background: #2E9BB8;
+            border-color: var(--focus-green);
+            box-shadow: 0 0 8px var(--focus-green-glow);
         }
 
         .rom-games-divider {
@@ -208,7 +210,7 @@
         }
 
         .games-roms-panel .box {
-            background-image: url("https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=640&q=80");
+            background-image: url("https://compartilhei.net/wp-content/uploads/2021/06/compartilhei-networks-guia-rapido-e-facil-retroarch-jpg-webp.webp");
         }
 
         .rom-games-empty {
@@ -331,7 +333,7 @@
         }
 
         .section .box {
-            background-image: url("https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=640&q=80");
+            background-image: url("https://compartilhei.net/wp-content/uploads/2021/06/compartilhei-networks-guia-rapido-e-facil-retroarch-jpg-webp.webp");
         }
 
 
@@ -927,11 +929,11 @@
         var titleEl = document.getElementById("rom-games-divider-title");
         if (!titleEl) return;
         if (!emulatorId) {
-            titleEl.textContent = "Games Selection";
+            titleEl.textContent = "Roms Selection";
             return;
         }
         var name = getEmulatorName(emulatorId);
-        titleEl.textContent = name || "Games Selection";
+        titleEl.textContent = name || "Roms Selection";
     }
 
     function clearRomCatFocus() {
